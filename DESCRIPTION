@@ -1,0 +1,25 @@
+Package: PDE
+Type: Package
+Title: Extract Sentences and Tables from PDFs with User Interface
+Version: 1.1.2
+Authors@R: person(given = "Erik", family = "Stricker", email = "erik.stricker@gmx.com", 
+  role = c("aut", "cre"))
+Author: Erik Stricker [aut, cre]
+Maintainer: Erik Stricker <erik.stricker@gmx.com>
+Description: The PDE (Pdf Data Extractor) allows the extraction of 
+    information and tables optionally based on search words from 
+    PDF (Portable Document Format) files and enables the visualization 
+    of the results, both by providing a convenient user-interface. 
+License: GPL-3 | file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: tcltk
+Depends: 
+    tcltk2 (>= 1.2.11),
+    R (>= 3.5)
+SystemRequirements:	XPDF (>=4.0)(https://www.xpdfreader.com/download.html)
+RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
