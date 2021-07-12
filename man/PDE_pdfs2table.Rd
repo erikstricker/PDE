@@ -10,9 +10,10 @@ PDE_pdfs2table(
   table.heading.words = "",
   ignore.case.th = FALSE,
   out.table.format = ".csv (WINDOWS-1252)",
-  dev = 20,
+  dev_x = 20,
+  dev_y = 9999,
   write.table.locations = FALSE,
-  exp.nondetc.tabs = FALSE,
+  exp.nondetc.tabs = TRUE,
   delete = TRUE,
   verbose = TRUE
 )
@@ -26,7 +27,7 @@ PDE_pdfs2table(
 \item{table.heading.words}{List of strings. Different than standard (TABLE,
 TAB or table plus number) headings to be detected. Regex rules apply (see
 also
-\url{https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
+\url{https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
  Default = \code{""}.}
 
 \item{ignore.case.th}{Logical. Are the additional table headings (see
@@ -40,8 +41,14 @@ exported tables are opened in, i.e., Windows: \code{"(WINDOWS-1252)"}; Mac:
 \code{(macintosh)}; Linux: \code{(UTF-8)}. Default: \code{".csv"} and 
 encoding depending on the operational system.}
 
-\item{dev}{Numeric. For a table the size of indention which would be
+\item{dev_x}{Numeric. For a table the size of indention which would be
 considered the same column. Default: \code{20}.}
+
+\item{dev_y}{Numeric. For a table the vertical distance which would be
+considered the same row. Can be either a number or set to dynamic detection 
+[9999], in which case the font size is used to detect which words are in the 
+same row. 
+Default: \code{9999}.}
 
 \item{write.table.locations}{Logical. If \code{TRUE}, a separate file with the
 headings of all tables, their relative location in the generated html and
@@ -65,17 +72,18 @@ file and writes output in the corresponding folder.
 \examples{
 ## Running a simple table extraction
 if(PDE_check_Xpdf_install() == TRUE){
-outputtables <- PDE_pdfs2table(pdf = paste0(PDE_path(),
+outputtables <- PDE_pdfs2table(pdf = paste0(system.file(package = "PDE"),
                  "examples/Methotrexate/29973177_!.pdf"),
- out = paste0(PDE_path(),"examples/29973177_tables/"))
+ out = paste0(system.file(package = "PDE"),"/examples/29973177_tables/"))
 }
 
 ## Running a the same table extraction as above with all paramaters shown
 if(PDE_check_Xpdf_install() == TRUE){
- outputtables <- PDE_pdfs2table(pdf = paste0(PDE_path(),
+ outputtables <- PDE_pdfs2table(pdf = paste0(system.file(package = "PDE"),
                                  "examples/Methotrexate/29973177_!.pdf"),
- out = paste0(PDE_path(),"examples/29973177_tables/"),
- dev = 20,
+ out = paste0(system.file(package = "PDE"),"/examples/29973177_tables/"),
+ dev_x = 20,
+ dev_y = 9999,
  table.heading.words = "",
  ignore.case.th = FALSE,
  out.table.format = ".csv (WINDOWS-1252)",

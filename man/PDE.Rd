@@ -3,7 +3,7 @@
 \docType{package}
 \name{PDE}
 \alias{PDE}
-\title{PDE: Extract Sentences and Tables from PDF Files.}
+\title{PDE: Extract Tables and Sentences from PDF Files.}
 \description{
 The package includes two main components: 1) The PDE analyzer performs the
 sentence and table extraction while 2) the PDE reader allows the
@@ -13,7 +13,7 @@ user-friendly visualization and quick-processing of the obtained results.
  \code{\link{PDE_analyzer}}, \code{\link{PDE_analyzer_i}},
   \code{\link{PDE_extr_data_from_pdfs}}, \code{\link{PDE_pdfs2table}}, 
   \code{\link{PDE_pdfs2table_searchandfilter}},\code{\link{PDE_pdfs2txt_searchandfilter}}, 
-  \code{\link{PDE_reader_i}}, \code{\link{PDE_path}}, \code{\link{PDE_install_Xpdftools4.02}},
+  \code{\link{PDE_reader_i}}, \code{\link{PDE_install_Xpdftools4.02}},
   \code{\link{PDE_check_Xpdf_install}}
 }
 

@@ -16,10 +16,11 @@ PDE_pdfs2table_searchandfilter(
   ignore.case.sw = FALSE,
   eval.abbrevs = TRUE,
   out.table.format = ".csv (WINDOWS-1252)",
-  dev = 20,
+  dev_x = 20,
+  dev_y = 9999,
   write.table.locations = FALSE,
-  exp.nondetc.tabs = FALSE,
-  write.tab.doc.file = FALSE,
+  exp.nondetc.tabs = TRUE,
+  write.tab.doc.file = TRUE,
   delete = TRUE,
   verbose = TRUE
 )
@@ -33,7 +34,7 @@ PDE_pdfs2table_searchandfilter(
 \item{filter.words}{List of strings. The list of filter words. If not
 \code{NA} or \code{""} a hit will be counted every time a word from the list
 is detected in the article. Regex rules apply (see also
-\url{https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
+\url{https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
  Default: \code{""}.}
 
 \item{ignore.case.fw}{Logical. Are the filter words case-sensitive (does
@@ -45,7 +46,7 @@ capitalization matter)? Default: \code{FALSE}.}
 \item{table.heading.words}{List of strings. Different than standard (TABLE,
 TAB or table plus number) headings to be detected. Regex rules apply (see
 also
-\url{https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
+\url{https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
  Default = \code{""}.}
 
 \item{ignore.case.th}{Logical. Are the additional table headings (see
@@ -55,7 +56,7 @@ Default = \code{FALSE}.}
 \item{search.words}{List of strings. List of search words. To extract all
 tables from the PDF file leave \code{search.words = ""}. Regex rules apply 
 (see also
-\url{https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).}
+\url{https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).}
 
 \item{ignore.case.sw}{Logical. Are the search words case-sensitive (does
 capitalization matter)? Default: \code{FALSE}.}
@@ -71,8 +72,14 @@ exported tables are opened in, i.e., Windows: \code{"(WINDOWS-1252)"}; Mac:
 \code{(macintosh)}; Linux: \code{(UTF-8)}. Default: \code{".csv"} and 
 encoding depending on the operational system.}
 
-\item{dev}{Numeric. For a table the size of indention which would be
+\item{dev_x}{Numeric. For a table the size of indention which would be
 considered the same column. Default: \code{20}.}
+
+\item{dev_y}{Numeric. For a table the vertical distance which would be
+considered the same row. Can be either a number or set to dynamic detection 
+[9999], in which case the font size is used to detect which words are in the 
+same row. 
+Default: \code{9999}.}
 
 \item{write.table.locations}{Logical. If \code{TRUE}, a separate file with the
 headings of all tables, their relative location in the generated html and
@@ -81,11 +88,11 @@ generated. Default: \code{FALSE}.}
 
 \item{exp.nondetc.tabs}{Logical. If \code{TRUE}, if a table was detected in a
 PDF file but is an image or cannot be read, the page with the table with be
-exported as a png. Default: \code{FALSE}.}
+exported as a png. Default: \code{TRUE}.}
 
 \item{write.tab.doc.file}{Logical. If \code{TRUE}, if search words are used
 for table detection and no search words were found in the tables of a PDF 
-file, a \strong{no.table.w.search.words}. Default: \code{FALSE}.}
+file, a \strong{no.table.w.search.words}. Default: \code{TRUE}.}
 
 \item{delete}{Logical. If \code{TRUE}, the intermediate \strong{txt},
 \strong{keeplayouttxt} and \strong{html} copies of the PDF file will be 
@@ -112,9 +119,9 @@ folder.
 
 ## Running a simple analysis with filter and search words to extract tables
 if(PDE_check_Xpdf_install() == TRUE){
- outputtables <- PDE_pdfs2table_searchandfilter(pdf = paste0(PDE_path(),
+ outputtables <- PDE_pdfs2table_searchandfilter(pdf = paste0(system.file(package = "PDE"),
                                    "examples/Methotrexate/29973177_!.pdf"),
- out = paste0(PDE_path(),"examples/29973177_tables/"),
+ out = paste0(system.file(package = "PDE"),"/examples/29973177_tables/"),
  filter.words = strsplit("cohort;case-control;group;study population;study participants", ";")[[1]],
  ignore.case.fw = TRUE,
  search.words = strsplit("(M|m)ethotrexate;(T|t)rexal;(R|r)heumatrex;(O|o)trexup", ";")[[1]],
@@ -124,10 +131,11 @@ if(PDE_check_Xpdf_install() == TRUE){
 ## Running an advanced analysis with filter and search words to
 ## extract tables and obtain documentation files
 if(PDE_check_Xpdf_install() == TRUE){
- outputtables <- PDE_pdfs2table_searchandfilter(pdf = paste0(PDE_path(),
+ outputtables <- PDE_pdfs2table_searchandfilter(pdf = paste0(system.file(package = "PDE"),
                                    "examples/Methotrexate/29973177_!.pdf"),
- out = paste0(PDE_path(),"examples/29973177_tables/"),
- dev = 20,
+ out = paste0(system.file(package = "PDE"),"/examples/29973177_tables/"),
+ dev_x = 20,
+ dev_y = 9999,
  filter.words = strsplit("cohort;case-control;group;study population;study participants", ";")[[1]],
  ignore.case.fw = TRUE,
  filter.word.times = 20,

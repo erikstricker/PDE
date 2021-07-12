@@ -11,5 +11,5 @@ The function returns a potential path for the PDE package. If the PDE
 tool was not correctly installed it returns "".
 }
 \description{
-\code{PDE_path} returns the installation path of the PDE tool.
+\code{PDE_path} is deprecated. Please run system.file(package = "PDE") instead.
 }

@@ -15,7 +15,7 @@ PDE_pdfs2txt_searchandfilter(
   eval.abbrevs = TRUE,
   out.table.format = ".csv (WINDOWS-1252)",
   context = 0,
-  write.txt.doc.file = FALSE,
+  write.txt.doc.file = TRUE,
   delete = TRUE,
   verbose = TRUE
 )
@@ -29,7 +29,7 @@ PDE_pdfs2txt_searchandfilter(
 \item{filter.words}{List of strings. The list of filter words. If not
 \code{NA} or \code{""} a hit will be counted every time a word from the list
 is detected in the article. Regex rules apply (see also
-\url{https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
+\url{https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
  Default: \code{""}.}
 
 \item{ignore.case.fw}{Logical. Are the filter words case-sensitive (does
@@ -40,7 +40,7 @@ capitalization matter)? Default: \code{FALSE}.}
 
 \item{search.words}{List of strings. List of search words. Regex rules apply (see
 also
-\url{https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).}
+\url{https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).}
 
 \item{ignore.case.sw}{Logical. Are the search words case-sensitive (does
 capitalization matter)? Default: \code{FALSE}.}
@@ -66,7 +66,7 @@ filename followed by \strong{no.txt.w.search.words}. If the PDF file is
 empty, a file will be created with the PDF filename followed by
 \strong{no.content.detected}. If the filter word threshold is not met, 
 a file will be created with the PDF filename followed by 
-\strong{no.txt.w.filter.words}. Default: \code{FALSE}.}
+\strong{no.txt.w.filter.words}. Default: \code{TRUE}.}
 
 \item{delete}{Logical. If \code{TRUE}, the intermediate \strong{txt},
 \strong{keeplayouttxt} and \strong{html} copies of the PDF file will be 
@@ -82,9 +82,9 @@ folder.
 \examples{
 ## Running a simple analysis with filter and search words to extract sentences
 if(PDE_check_Xpdf_install() == TRUE){
- outputtables <- PDE_pdfs2txt_searchandfilter(pdf = paste0(PDE_path(),
+ outputtables <- PDE_pdfs2txt_searchandfilter(pdf = paste0(system.file(package = "PDE"),
                                       "examples/Methotrexate/29973177_!.pdf"),
- out = paste0(PDE_path(),"examples/MTX_txt+-0/"),
+ out = paste0(system.file(package = "PDE"),"/examples/MTX_txt+-0/"),
  filter.words = strsplit("cohort;case-control;group;study population;study participants", ";")[[1]],
  ignore.case.fw = TRUE,
  search.words = strsplit("(M|m)ethotrexate;(T|t)rexal;(R|r)heumatrex;(O|o)trexup", ";")[[1]],
@@ -94,9 +94,9 @@ if(PDE_check_Xpdf_install() == TRUE){
 ## Running an advanced analysis with filter and search words to
 ## extract sentences and obtain documentation files
 if(PDE_check_Xpdf_install() == TRUE){
- outputtables <- PDE_pdfs2txt_searchandfilter(pdf = paste0(PDE_path(),
+ outputtables <- PDE_pdfs2txt_searchandfilter(pdf = paste0(system.file(package = "PDE"),
                                        "examples/Methotrexate/29973177_!.pdf"),
- out = paste0(PDE_path(),"/examples/MTX_txt+-1/"),
+ out = paste0(system.file(package = "PDE"),"/examples/MTX_txt+-1/"),
  context = 1,
  filter.words = strsplit("cohort;case-control;group;study population;study participants", ";")[[1]],
  ignore.case.fw = TRUE,
