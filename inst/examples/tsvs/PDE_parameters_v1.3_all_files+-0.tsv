@@ -14,7 +14,7 @@ write.table.locations	TRUE
 delete	TRUE
 exp.nondetc.tabs	TRUE
 out.table.format	.csv (WINDOWS-1252)
-dev	20
+dev_x	20
 context	0
 write.tab.doc.file	TRUE
 write.txt.doc.file	TRUE

@@ -12,7 +12,7 @@ The following functions are deprecated and will be made defunct; use
 the replacement indicated below:
   \itemize{
     
-    \item{PDE_install_XpdfReader4.02: \code{\link{PDE_install_Xpdftools4.02}}}
+    \item{PDE_path: \code{system.file(package = "PDE")}}
     
   }
 }

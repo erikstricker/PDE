@@ -20,9 +20,9 @@ PDE_extr_data_from_pdfs(
   dev = 20,
   context = 0,
   write.table.locations = FALSE,
-  exp.nondetc.tabs = FALSE,
-  write.tab.doc.file = FALSE,
-  write.txt.doc.file = FALSE,
+  exp.nondetc.tabs = TRUE,
+  write.tab.doc.file = TRUE,
+  write.txt.doc.file = TRUE,
   delete = TRUE,
   verbose = TRUE
 )
@@ -42,7 +42,7 @@ require search words.}
 \item{filter.words}{List of strings. The list of filter words. If not
 \code{NA} or \code{""} a hit will be counted every time a word from the list
 is detected in the article. Regex rules apply (see also
-\url{https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
+\url{https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
  Default: \code{""}.}
 
 \item{ignore.case.fw}{Logical. Are the filter words case-sensitive (does
@@ -54,7 +54,7 @@ capitalization matter)? Default: \code{FALSE}.}
 \item{table.heading.words}{List of strings. Different than standard (TABLE,
 TAB or table plus number) headings to be detected. Regex rules apply (see
 also
-\url{https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
+\url{https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).
  Default = \code{""}.}
 
 \item{ignore.case.th}{Logical. Are the additional table headings (see
@@ -64,7 +64,7 @@ Default = \code{FALSE}.}
 \item{search.words}{List of strings. List of search words. To extract all
 tables from the PDF files leave \code{search.words = ""}. Regex rules apply (see
 also
-\url{https://rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).}
+\url{https://www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf}).}
 
 \item{ignore.case.sw}{Logical. Are the search words case-sensitive (does
 capitalization matter)? Default: \code{FALSE}.}
@@ -94,11 +94,11 @@ generated. Default: \code{FALSE}.}
 
 \item{exp.nondetc.tabs}{Logical. If \code{TRUE}, if a table was detected in a
 PDF file but is an image or cannot be read, the page with the table with be
-exported as a png. Default: \code{FALSE}.}
+exported as a png. Default: \code{TRUE}.}
 
 \item{write.tab.doc.file}{Logical. If \code{TRUE}, if search words are used
 for table detection and no search words were found in the tables of a PDF 
-file, a \strong{no.table.w.search.words}. Default: \code{FALSE}.}
+file, a \strong{no.table.w.search.words}. Default: \code{TRUE}.}
 
 \item{write.txt.doc.file}{Logical. If \code{TRUE}, if no search words were
 found in the sentences of a PDF file, a file will be created with the PDF
@@ -106,7 +106,7 @@ filename followed by \strong{no.txt.w.search.words}. If the PDF file is
 empty, a file will be created with the PDF filename followed by
 \strong{no.content.detected}. If the filter word threshold is not met, 
 a file will be created with the PDF filename followed by 
-\strong{no.txt.w.filter.words}. Default: \code{FALSE}.}
+\strong{no.txt.w.filter.words}. Default: \code{TRUE}.}
 
 \item{delete}{Logical. If \code{TRUE}, the intermediate \strong{txt},
 \strong{keeplayouttxt} and \strong{html} copies of the PDF files will be 
@@ -132,12 +132,12 @@ file and writes output in the corresponding folder.
 
 ## Running a simple analysis with filter and search words to extract sentences and tables
 if(PDE_check_Xpdf_install() == TRUE){
- outputtables <- PDE_extr_data_from_pdfs(pdfs = c(paste0(PDE_path(),
+ outputtables <- PDE_extr_data_from_pdfs(pdfs = c(paste0(system.file(package = "PDE"),
                                                  "examples/Methotrexate/29973177_!.pdf"),
-                                                 paste0(PDE_path(),
+                                                 paste0(system.file(package = "PDE"),
                                                  "examples/Methotrexate/31083238_!.pdf")),
  whattoextr = "tabandtxt",
- out = paste0(PDE_path(),"examples/MTX_all_files+-0_test/"),
+ out = paste0(system.file(package = "PDE"),"/examples/MTX_all_files+-0_test/"),
  filter.words = strsplit("cohort;case-control;group;study population;study participants", ";")[[1]],
  ignore.case.fw = TRUE,
  search.words = strsplit("(M|m)ethotrexate;(T|t)rexal;(R|r)heumatrex;(O|o)trexup", ";")[[1]],
@@ -147,12 +147,12 @@ if(PDE_check_Xpdf_install() == TRUE){
 ## Running an advanced analysis with filter and search words to
 ## extract sentences and tables and obtain documentation files
 if(PDE_check_Xpdf_install() == TRUE){
- outputtables <- PDE_extr_data_from_pdfs(pdfs = c(paste0(PDE_path(),
+ outputtables <- PDE_extr_data_from_pdfs(pdfs = c(paste0(system.file(package = "PDE"),
                                                  "examples/Methotrexate/29973177_!.pdf"),
-                                                  paste0(PDE_path(),
+                                                  paste0(system.file(package = "PDE"),
                                                  "examples/Methotrexate/31083238_!.pdf")),
  whattoextr = "tabandtxt",
- out = paste0(PDE_path(),"examples/MTX_all_files+-1_test/"),
+ out = paste0(system.file(package = "PDE"),"/examples/MTX_all_files+-1_test/"),
  context = 1,
  dev = 20,
  filter.words = strsplit("cohort;case-control;group;study population;study participants",";")[[1]],

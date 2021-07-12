@@ -42,7 +42,8 @@ PDF files.
 
 \examples{
  if(PDE_check_Xpdf_install() == TRUE){
-   PDE_analyzer(paste0(PDE_path(),"examples/tsvs/PDE_parameters_v1.0_all_files+-0.tsv"))
+   PDE_analyzer(paste0(system.file(package = "PDE"),
+   "/examples/tsvs/PDE_parameters_v1.0_all_files+-0.tsv"))
  }
 
 \dontrun{

@@ -1,7 +1,7 @@
 Package: PDE
 Type: Package
-Title: Extract Sentences and Tables from PDFs with User Interface
-Version: 1.1.2
+Title: Extract Tables and Sentences from PDFs with User Interface
+Version: 1.3.0
 Authors@R: person(given = "Erik", family = "Stricker", email = "erik.stricker@gmx.com", 
   role = c("aut", "cre"))
 Author: Erik Stricker [aut, cre]
@@ -12,12 +12,11 @@ Description: The PDE (Pdf Data Extractor) allows the extraction of
     of the results, both by providing a convenient user-interface. 
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
-LazyData: true
 Imports: tcltk
 Depends: 
     tcltk2 (>= 1.2.11),
     R (>= 3.5)
-SystemRequirements:	XPDF (>=4.0)(https://www.xpdfreader.com/download.html)
+SystemRequirements:	XPDF (4.2.0)(https://www.xpdfreader.com/download.html)
 RoxygenNote: 7.1.1
 Suggests: 
     knitr,
