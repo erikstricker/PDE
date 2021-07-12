@@ -37,10 +37,10 @@ Install the dependent packages
     install.packages("tcltk2")    # Install the dependent package tcltk2
 
 The package requires the Xpdf command line tools by Glyph & Cog, LLC.
-Please download and install the Xpdf command line tools from the
+Please download and install the Xpdf command line tools 4.2 from the
 following website onto your local disk:
-<a href="https://www.xpdfreader.com/download.html" class="uri">https://www.xpdfreader.com/download.html</a>
-(<a href="https://www.xpdfreader.com/download.html" class="uri">https://www.xpdfreader.com/download.html</a>).
+<a href="https://github.com/erikstricker/PDE/tree/master/inst/examples/bin" class="uri">https://github.com/erikstricker/PDE/tree/master/inst/examples/bin</a>
+(<a href="https://github.com/erikstricker/PDE/tree/master/inst/examples/bin" class="uri">https://github.com/erikstricker/PDE/tree/master/inst/examples/bin</a>).
 Alternatively, the following command can be used to install the correct
 Xpdf command line tools:
 
@@ -100,9 +100,9 @@ Quick guide to get started
     library("PDE")
     PDE_analyzer_i()
 
-<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface_empty_mac.png" width="50%" style="display: block; margin: auto;" />
+<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface_empty_linux.png" width="50%" style="display: block; margin: auto;" />
 <center>
-`PDE_analyzer_i()` user interface on Mac
+`PDE_analyzer_i()` user interface on Linux
 </center>
 
 </br>
@@ -121,9 +121,9 @@ Quick guide to get started
 
 ### PDE\_reader\_i()
 
-<img src="vignettes/scrnshots/Screenshot_PDE_reader_user_interface_empty_linux.png" width="50%" style="display: block; margin: auto;" />
+<img src="vignettes/scrnshots/Screenshot_PDE_reader_user_interface_empty_mac.png" width="50%" style="display: block; margin: auto;" />
 <center>
-`PDE_reader_i()` user interface on Linux
+`PDE_reader_i()` user interface on Mac
 </center>
 
 </br>
@@ -166,13 +166,6 @@ listed below each description:** `argument`
     library("PDE")
     PDE_analyzer_i()
 
-<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface_empty_win.png" width="75%" style="display: block; margin: auto;" />
-<center>
-`PDE_analyzer_i()` user interface on Microsoft Windows
-</center>
-
-</br>
-
 #### Choose the locations for the required files:
 
 <img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface.choose_variables_empty.png" width="100%" style="display: block; margin: auto;" />
@@ -191,7 +184,7 @@ required files
 
 #### Input/Output:
 
-<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface.input_output_empty.png" width="100%" style="display: block; margin: auto;" />
+<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface_empty_win.png" width="100%" style="display: block; margin: auto;" />
 <center>
 `PDE_analyzer_i()` user interface - Input/Output
 </center>
@@ -207,7 +200,33 @@ required files
     be separated by ; without a space.  
     Argument for `PDE_extr_data_from_pdfs()`: `pdfs`
 
-2.  **Choose what to extract**: The PDE analyzer has 2 main functions
+2.  **Open output folder**: All analysis files will be created inside of
+    this folder; therefore, choose an empty folder or create a new one
+    as output directory, since analyses create at least a number of
+    files equal to the amount of PDF files analyzed. If no output folder
+    is chosen, the results will be saved in the R working directory.  
+    Argument for `PDE_extr_data_from_pdfs()`: `out`
+
+3.  **Choose output format**: The resulting analyses files can either be
+    generated as comma-separated values files (.csv) or tab-separated
+    values files (.tsv), with the former being easier to open and save
+    in Microsoft Excel, while the later leads to less errors when
+    opening in Microsoft Excel (as tabs are rare in texts). Depending on
+    the operational system the output file are opened in, it is
+    recommended to choose the Microsoft Windows (WINDOWS-1252), Mac
+    (macintosh) or Linux (UTF-8) encoding.  
+    Argument for `PDE_extr_data_from_pdfs()`: `out.table.format`
+
+#### Search Words:
+
+<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface.search_words_empty.png" width="100%" style="display: block; margin: auto;" />
+<center>
+`PDE_analyzer_i()` user interface - Search Words
+</center>
+
+</br>
+
+1.  **Choose what to extract**: The PDE analyzer has 2 main functions
     A\] PDF2TXT (extract sentences from pdf) and B\] PDF2TABLE (table of
     PDF to excel file) which can be combined or executed separately.
     Each function can be combined with filters and search words. A file
@@ -217,22 +236,65 @@ required files
     `[PDF file name][number of table][table heading]`.  
     Argument for `PDE_extr_data_from_pdfs()`: `whattoextr`
 
-3.  **Open output folder**: All analysis files will be created inside of
-    this folder; therefore, choose an empty folder or create a new one
-    as output directory, since analyses create at least a number of
-    files equal to the amount of PDF files analyzed. If no output folder
-    is chosen, the results will be saved in the R working directory.  
-    Argument for `PDE_extr_data_from_pdfs()`: `out`
+2.  **Search words?**: The algorithm can either extract , tables, or
+    sentences and tables with one of the search words present. If the
+    “tables” only analysis was chosen, the algorithm can also extract
+    all tables detected in the paper (choose this option here). In the
+    later case, the search words field should remain empty.
 
-4.  **Choose output format**: The resulting analyses files can either be
-    generated as comma-separated values files (.csv) or tab-separated
-    values files (.tsv), with the former being easier to open and save
-    in Microsoft Excel, while the later leads to less errors when
-    opening in Microsoft Excel (as tabs are rare in texts). Depending on
-    the operational system the output file are opened in, it is
-    recommended to choose the Microsoft Windows (WINDOWS-1252), Mac
-    (macintosh) or Linux (UTF-8) encoding.  
-    Argument for `PDE_extr_data_from_pdfs()`: `out.table.format`
+3.  **Search words**: Type in the list of search words separated by “;”
+    without spaces in between.  
+    Argument for `PDE_extr_data_from_pdfs()`: `search.words`
+
+4.  **Search words case sensitive**: E.g., for “Word”, if “no” was
+    chosen then “word”, “WORD”, “Word”, etc., will be detected, if “yes”
+    was chosen only “Word” will be detected.  
+    Argument for `PDE_extr_data_from_pdfs()`: `ignore.case.sw`
+
+5.  **Number of sentences before and after**: When 0 is chosen, only the
+    sentence with the search word is extracted. If any number n is
+    chosen, n number of sentences before and n number of sentences after
+    the sentence with the search word will be extracted. A sentence is
+    currently defined by starting and ending with a “.” (period with a
+    subsequent space).  
+    Argument for `PDE_extr_data_from_pdfs()`: `context`
+
+6.  **Evaluate abbreviations?**: If “yes” was chosen, all abbreviations
+    that were used in the PDF documents for the search words will be
+    saved and then replace by `abbreviation (search word)$*`, e.g.,
+    `MTX` will be replaced by `MTX (Methotrexate)$*`. In addition plural
+    of the abbreviations, i.e., the abbreviation with an “s” at the end
+    will be replaced accordingly as well.  
+    Argument for `PDE_extr_data_from_pdfs()`: `eval.abbrevs`
+
+#### Filter Words:
+
+<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface.filter_words_empty.png" width="100%" style="display: block; margin: auto;" />
+<center>
+`PDE_analyzer_i()` user interface - Filter Words
+</center>
+
+</br>
+
+1.  **Filter words?**: In some cases, only articles of a certain topic
+    should be analyzed. Filterwords provide a way to analyze only
+    articles which carry words from a list at least n times.
+
+2.  **Filter words**: Type in the list of filter words separated by “;”
+    without spaces in between. A hit will be counted every time a word
+    from the list is detected in the article.  
+    Argument for `PDE_extr_data_from_pdfs()`: `filter.words`
+
+3.  **Filter words case sensitive**: E.g., for “Word”, if “no” was
+    chosen then “word”, “WORD”, “Word”, etc., will be detected, if “yes”
+    was chosen only “Word” will be detected.  
+    Argument for `PDE_extr_data_from_pdfs()`: `ignore.case.fw`
+
+4.  **Filter word times**: This represents the minimum number of hits
+    described above which has to be detected for a paper to be further
+    analyzed. If the threshold is not met, a documentation file can be
+    exported if selected in the documentation section.  
+    Argument for `PDE_extr_data_from_pdfs()`: `filter.word.times`
 
 #### Parameters:
 
@@ -255,62 +317,19 @@ required files
     if “yes” was chosen only “HEADING” will be detected.  
     Argument for `PDE_extr_data_from_pdfs()`: `ignore.case.th`
 
-3.  **Pixel deviation**: For some tables the heading is slightly
+3.  **Column pixel deviation**: For some tables the heading is slightly
     indented which would make the algorithm assume it was a separated
-    column. With the pixel deviation the size of indention which would
-    be considered the same column can be adjusted.  
-    Argument for `PDE_extr_data_from_pdfs()`: `dev`
+    column. With the column pixel deviation the size of indention which
+    would be considered the same column can be adjusted.  
+    Argument for `PDE_extr_data_from_pdfs()`: `dev_x`
 
-4.  **Filter words?**: In some cases, only articles of a certain topic
-    should be analyzed. Filterwords provide a way to analyze only
-    articles which carry words from a list at least n times.
-
-5.  **Filter words**: Type in the list of filter words separated by “;”
-    without spaces in between. A hit will be counted every time a word
-    from the list is detected in the article.  
-    Argument for `PDE_extr_data_from_pdfs()`: `filter.words`
-
-6.  **Filter words case sensitive**: E.g., for “Word”, if “no” was
-    chosen then “word”, “WORD”, “Word”, etc., will be detected, if “yes”
-    was chosen only “Word” will be detected.  
-    Argument for `PDE_extr_data_from_pdfs()`: `ignore.case.fw`
-
-7.  **Filter word times**: This represents the minimum number of hits
-    described above which has to be detected for a paper to be further
-    analyzed. If the threshold is not met, a documentation file can be
-    exported if selected in the documentation section.  
-    Argument for `PDE_extr_data_from_pdfs()`: `filter.word.times`
-
-8.  **Search words?**: The algorithm can either extract , tables, or
-    sentences and tables with one of the search words present. If the
-    “tables” only analysis was chosen, the algorithm can also extract
-    all tables detected in the paper (choose this option here). In the
-    later case, the search words field should remain empty.
-
-9.  **Search words**: Type in the list of search words separated by “;”
-    without spaces in between.  
-    Argument for `PDE_extr_data_from_pdfs()`: `search.words`
-
-10. **Search words case sensitive**: E.g., for “Word”, if “no” was
-    chosen then “word”, “WORD”, “Word”, etc., will be detected, if “yes”
-    was chosen only “Word” will be detected.  
-    Argument for `PDE_extr_data_from_pdfs()`: `ignore.case.sw`
-
-11. **Number of sentences before and after**: When 0 is chosen, only the
-    sentence with the search word is extracted. If any number n is
-    chosen, n number of sentences before and n number of sentences after
-    the sentence with the search word will be extracted. A sentence is
-    currently defined by starting and ending with a “.” (period with a
-    subsequent space).  
-    Argument for `PDE_extr_data_from_pdfs()`: `context`
-
-12. **Evaluate abbreviations?**: If “yes” was chosen, all abbreviations
-    that were used in the PDF documents for the search words will be
-    saved and then replace by `abbreviation (search word)$*`, e.g.,
-    `MTX` will be replaced by `MTX (Methotrexate)$*`. In addition plural
-    of the abbreviations, i.e., the abbreviation with an “s” at the end
-    will be replaced accordingly as well.  
-    Argument for `PDE_extr_data_from_pdfs()`: `eval.abbrevs`
+4.  **Row pixel deviation**: For some tables elements even though in the
+    same row can have slightly different vertical coordiates. With the
+    row pixel deviation the variation of vertical coordinates which
+    would be considered the same row can be adjusted. It can be either a
+    number or set to dynamic detection \[9999\], in which case the font
+    size is used to detect which words are in the same row.  
+    Argument for `PDE_extr_data_from_pdfs()`: `dev_y`
 
 #### Documentation/Debugging:
 
@@ -355,7 +374,7 @@ required files
     “no.txt.w.filter.words” in the `excl_by_fw` folder.  
     Argument for `PDE_extr_data_from_pdfs()`: `write.txt.doc.file`
 
-5.  **Delete intermediate files**: The program generates a txt,
+5.  **Keep intermediate files**: The program generates a txt,
     keeplayouttxt and HTML copy of the PDF file, which will be deleted
     if intermediate files deletion is chosen. In case, this option was
     chosen accidentally, the user has two options to delete the .txt and
@@ -363,8 +382,9 @@ required files
     option being yes. 2) Quick and slightly more complicated option:
     Open the file explorer and search for `*.txt` and `*.html` in the
     PDF folder. Then select all files and folders of the search result
-    and press delete.  
-    Argument for `PDE_extr_data_from_pdfs()`: `delete`
+    and press delete. Keeping the intermediate files will set the
+    `delete` to `FALSE.` Argument for `PDE_extr_data_from_pdfs()`:
+    `delete`
 
 ------------------------------------------------------------------------
 
@@ -673,7 +693,7 @@ All files for example can be found in the installation folder
 `examples`. The folder can be located by running the following code in
 the R console:
 
-    PDE::PDE_path()
+    system.file(package = "PDE")
 
 #### Alternative to step-by-step selection: Load form from TSV
 
@@ -686,7 +706,7 @@ the R console:
 
 ##### Input/Output:
 
-<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface.input_output_MTX_example.png" width="100%" style="display: block; margin: auto;" />
+<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface_MTX_example.png" width="100%" style="display: block; margin: auto;" />
 <center>
 `PDE_analyzer_i()` user interface - Input/Output
 </center>
@@ -760,13 +780,21 @@ Shift to select multiple).
 1.  **Table heading case sensitive**: Irrelevant, as table heading was
     left blank.
 
-2.  **Pixel deviation**: Kept at standard value of 20. This ensured that
-    despite the indentation each cell value still gets sorted in the
-    correct column instead of creating additional columns.
+2.  **Column pixel deviation**: Kept at standard value of 20. This
+    ensured that despite the indentation each cell value still gets
+    sorted in the correct column instead of creating additional columns.
 
 <!-- -->
 
     20 
+
+1.  **Row pixel deviation**: Kept at standard value of 9999, which
+    indicates dynamic detection. Dynamic detection uses the font size
+    used to detect which words are in the same row.
+
+<!-- -->
+
+    9999 
 
 1.  **Filter words?**: For this analysis, filter words were used to only
     analyze articles with case-control data.
@@ -886,13 +914,14 @@ Shift to select multiple).
 
     yes
 
-1.  **Delete intermediate files**: This option is primarly for
-    debugging. Having access to the .txt and .html files will allow the
-    identification of undetected tables/sentences or conversion issues.
+1.  **Keep intermediate files**: This option is primarly for debugging.
+    Having access to the .txt and .html files will allow the
+    identification of undetected tables/sentences or conversion
+    issues.  
 
 <!-- -->
 
-    yes
+    no
 
 <img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface.start_MTX_example.png" width="100%" style="display: block; margin: auto;" />
 <center>
