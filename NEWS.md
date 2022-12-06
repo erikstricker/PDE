@@ -1,3 +1,29 @@
+# PDE 1.4.1
+* Added message box that opens when using PDE_analyzer_i() and xpdf command line tools are not installed
+* Fixed issue with correct numbering in PDE_analyzer_word_stat table
+* Fixed issue when having special characters in PDF file names
+* Fixed PDE_check_Xpdf_install() error when config fall was copied from another PC
+* Fixed error when extracting small tables
+* Fixed clearing of pdf field when cancel was selected
+* Fixed issue with pdfs containing empty pages
+
+# PDE 1.4.0
+* Fixed bug with PDE_analyzer_i() trying to display .png files
+* Fixed bug with greyed out searchwords entry box
+* Added regex_sw and regex_fw parameters to turn on and off regex formating of search and filter words
+* changed to shorter output file suffixes
+  * _not.enough.txt.w.filter.words --> _too_few_fwds
+  * _no.txt.w.search.words --> _no_txt_w_swds
+  * no_table --> no_tab_found
+  * _no.table.w.search.words --> _no_tab_w_swds
+  * _no.txt.w.search.words --> _no_txt_w_swds
+* removed full table heading from output file name of extracted tables
+* PDE_analyzer function return a table with search word and filterw word statistics
+* txt+- folder contains a txt file with the list of search words used
+* PDE_analyzer_word_stat table is written in the outputfolder
+* added the option to copy or move processed pdf files into output folder based on filter word presence
+* corrected xpdf tools 4.2.0 version to xpdf tools 4.02
+
 # PDE 1.3.0
 * Updated link to xpdf tools 4.2.0
 * Corrected multibyte error for PDE_reader_i()

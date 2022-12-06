@@ -100,9 +100,9 @@ Quick guide to get started
     library("PDE")
     PDE_analyzer_i()
 
-<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface_empty_linux.png" width="50%" style="display: block; margin: auto;" />
+<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface_empty_mac.png" width="50%" style="display: block; margin: auto;" />
 <center>
-`PDE_analyzer_i()` user interface on Linux
+`PDE_analyzer_i()` user interface on Mac
 </center>
 
 </br>
@@ -121,9 +121,9 @@ Quick guide to get started
 
 ### PDE\_reader\_i()
 
-<img src="vignettes/scrnshots/Screenshot_PDE_reader_user_interface_empty_mac.png" width="50%" style="display: block; margin: auto;" />
+<img src="vignettes/scrnshots/Screenshot_PDE_reader_user_interface_empty_linux.png" width="50%" style="display: block; margin: auto;" />
 <center>
-`PDE_reader_i()` user interface on Mac
+`PDE_reader_i()` user interface on Linux
 </center>
 
 </br>
@@ -191,7 +191,7 @@ required files
 
 </br>
 
-1.  **Open PDF folder**: Open a folder with PDF files you want to
+1.  **Select PDF folder**: Open a folder with PDF files you want to
     analyze. For the analysis, all PDF files in the folder and
     subfolders will be analyzed.  
     or  
@@ -200,22 +200,42 @@ required files
     be separated by ; without a space.  
     Argument for `PDE_extr_data_from_pdfs()`: `pdfs`
 
-2.  **Open output folder**: All analysis files will be created inside of
-    this folder; therefore, choose an empty folder or create a new one
-    as output directory, since analyses create at least a number of
+2.  **Select output folder**: All analysis files will be created inside
+    of this folder; therefore, choose an empty folder or create a new
+    one as output directory, since analyses create at least a number of
     files equal to the amount of PDF files analyzed. If no output folder
     is chosen, the results will be saved in the R working directory.  
-    Argument for `PDE_extr_data_from_pdfs()`: `out`
+    Argument for `PDE_extr_data_from_pdfs()`: `out` or **Open output
+    folder**: To have a look at the output files or generally the
+    contents of the output folder click here. The dialog will open the
+    output folder with the standard file explorer.
 
-3.  **Choose output format**: The resulting analyses files can either be
-    generated as comma-separated values files (.csv) or tab-separated
-    values files (.tsv), with the former being easier to open and save
-    in Microsoft Excel, while the later leads to less errors when
-    opening in Microsoft Excel (as tabs are rare in texts). Depending on
-    the operational system the output file are opened in, it is
-    recommended to choose the Microsoft Windows (WINDOWS-1252), Mac
-    (macintosh) or Linux (UTF-8) encoding.  
+3.  **Choose the output format**: The resulting analyses files can
+    either be generated as comma-separated values files (.csv) or
+    tab-separated values files (.tsv), with the former being easier to
+    open and save in Microsoft Excel, while the later leads to less
+    errors when opening in Microsoft Excel (as tabs are rare in texts).
+    Depending on the operational system the output file are opened in,
+    it is recommended to choose the Microsoft Windows (WINDOWS-1252),
+    Mac (macintosh) or Linux (UTF-8) encoding.  
     Argument for `PDE_extr_data_from_pdfs()`: `out.table.format`
+
+4.  **Adjust options in the tabs above**: For available options see
+    below.
+
+5.  **Start analysis**: When pressing the “Start analysis” button
+    processing through the `PDE_analyzer_i()` will begin and the button
+    will change to “Pause analysis”. Pausing of the analysis is
+    generally delayed until the processing of the current files is
+    finished. While paused the button will change to “Resume analysis”.
+    At any time the analysis can be aborted by pressing “Stop analysis”.
+    In addition to the analysis output files in the folders a summary
+    file titled `PDE_analyzer_word_stats.csv` will be generated with
+    search word and filter word statistics.
+
+6.  **Close session**: The `PDE_analyzer_i()` can be closed with this
+    button. While analysis is running the processing can be aborted by
+    pressing this button which will carry the caption “Stop analysis”.
 
 #### Search Words:
 
@@ -251,7 +271,13 @@ required files
     was chosen only “Word” will be detected.  
     Argument for `PDE_extr_data_from_pdfs()`: `ignore.case.sw`
 
-5.  **Number of sentences before and after**: When 0 is chosen, only the
+5.  **Regex**: When checked search words will follow the regex rules
+    (see
+    <a href="https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf" class="uri">https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf</a>
+    (<a href="https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf" class="uri">https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf</a>)).
+    Argument for `PDE_extr_data_from_pdfs()`: `regex.sw`
+
+6.  **Number of sentences before and after**: When 0 is chosen, only the
     sentence with the search word is extracted. If any number n is
     chosen, n number of sentences before and n number of sentences after
     the sentence with the search word will be extracted. A sentence is
@@ -259,7 +285,7 @@ required files
     subsequent space).  
     Argument for `PDE_extr_data_from_pdfs()`: `context`
 
-6.  **Evaluate abbreviations?**: If “yes” was chosen, all abbreviations
+7.  **Evaluate abbreviations?**: If “yes” was chosen, all abbreviations
     that were used in the PDF documents for the search words will be
     saved and then replace by `abbreviation (search word)$*`, e.g.,
     `MTX` will be replaced by `MTX (Methotrexate)$*`. In addition plural
@@ -285,16 +311,27 @@ required files
     from the list is detected in the article.  
     Argument for `PDE_extr_data_from_pdfs()`: `filter.words`
 
-3.  **Filter words case sensitive**: E.g., for “Word”, if “no” was
+3.  **Regex**: When checked filter words will follow the regex rules
+    (see
+    <a href="https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf" class="uri">https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf</a>
+    (<a href="https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf" class="uri">https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf</a>)).
+    Argument for `PDE_extr_data_from_pdfs()`: `regex.fw`
+
+4.  **Filter words case sensitive**: E.g., for “Word”, if “no” was
     chosen then “word”, “WORD”, “Word”, etc., will be detected, if “yes”
     was chosen only “Word” will be detected.  
     Argument for `PDE_extr_data_from_pdfs()`: `ignore.case.fw`
 
-4.  **Filter word times**: This represents the minimum number of hits
+5.  **Filter word times**: This represents the minimum number of hits
     described above which has to be detected for a paper to be further
     analyzed. If the threshold is not met, a documentation file can be
     exported if selected in the documentation section.  
     Argument for `PDE_extr_data_from_pdfs()`: `filter.word.times`
+
+6.  **Copy/move PDF files**: If filter words are used in the analyses,
+    the processed PDF files can either be copied (`cpy`) or moved (`mv`)
+    into the /pdf/ subfolder of the output folder. Argument for
+    `PDE_extr_data_from_pdfs()`: `cpy_mv`
 
 #### Parameters:
 
@@ -713,7 +750,7 @@ the R console:
 
 </br>
 
-1.  **Open PDF folder**: Open the folder with the pdfs. For the this
+1.  **Select PDF folder**: Open the folder with the pdfs. For the this
     example, 3 PDF files downloaded from PubMed using
     `(methotrexate) NOT Review[Publication Type]` as well as 1 erroneous
     (`99999999_x.pdf`) and 1 empty file (`00000000_x.pdf`) are in the
@@ -739,14 +776,11 @@ Shift to select multiple).
     examples/Methotrexate/00000000_x.pdf
     examples/Methotrexate/99999999_x.pdf
 
-1.  **Choose what to extract**: For the example, the analyzer will
-    extract sentences and tables with the keywords. Accordingly, the
-    option `both` should be chosen.
-
-2.  **Open output folder**: The files created by the `PDE_analyzer_i()`
-    should be identical to the files found in `examples/MTX_output`. Any
-    output folder can be chosen for the example analysis but the
-    following folder is recommended for direct comparison:  
+1.  **Select output folder**: The files created by the
+    `PDE_analyzer_i()` should be identical to the files found in
+    `examples/MTX_output`. Any output folder can be chosen for the
+    example analysis but the following folder is recommended for direct
+    comparison:  
 
 <!-- -->
 
@@ -759,11 +793,126 @@ Shift to select multiple).
 
     .tsv
 
+##### Search words:
+
+<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface.search_words_MTX_example.png" width="100%" style="display: block; margin: auto;" />
+<center>
+`PDE_analyzer_i()` user interface - Search words tab filled for MTX
+example
+</center>
+
+</br>
+
+1.  **Choose what to extract**: For the example, the analyzer will
+    extract sentences and tables with the keywords. Accordingly, the
+    option `both` should be chosen.
+
+2.  **Search words?**: The search words were used to extract all
+    Methotrexate relevant information.
+
+<!-- -->
+
+    yes
+
+1.  **Search words**: The list of search words includes all aliases of
+    Methotrexate. The search words are only separated by semicolons (no
+    spaces for separation).
+
+<!-- -->
+
+    (M|m)ethotrexate;(T|t)rexal;(R|r)heumatrex;(O|o)trexup
+
+1.  **Regex**: For the search words an exemplary regular expression was
+    used. The vertical line in the parenthesis indicates with the upper
+    case OR lower case first letter.
+
+<!-- -->
+
+    TRUE
+
+1.  **Search words case sensitive**: As explained above, the search
+    words are case-sentive due to an abbreviation being included.
+
+<!-- -->
+
+    yes
+
+1.  **Number of sentences before and after**: For simplicity reasons,
+    only the sentences with the search words were extracted.  
+
+<!-- -->
+
+    0
+
+1.  **Evaluate abbreviations?**: Abbreviations of Methotrexate such as
+    MTX should also be detected in the document.
+
+<!-- -->
+
+    yes
+
+##### Filter words:
+
+<img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface.filter_words_MTX_example.png" width="100%" style="display: block; margin: auto;" />
+<center>
+`PDE_analyzer_i()` user interface - Filter words tab filled for MTX
+example
+</center>
+
+</br>
+
+1.  **Filter words?**: For this analysis, filter words were used to only
+    analyze articles with case-control data.
+
+<!-- -->
+
+    yes 
+
+1.  **Filter words**: These words should be found at a high frequency in
+    case-control papers. The filter words are only separated by
+    semicolons (no spaces for separation).
+
+<!-- -->
+
+    cohort;case-control;group;study population;study participants 
+
+1.  **Regex**: The filter words do not include any regular expressions.
+
+<!-- -->
+
+    FALSE
+
+1.  **Filter words case sensitive**: Since it does not matter if a word
+    is found capitalized at the beginning of a sentence, in a heading or
+    within a sentence the search is not case-sensitive.
+
+<!-- -->
+
+    no
+
+1.  **Filter word times**: Kept at standard value of 20. Negative
+    controls included an average of 2.4 times the filter words (despite
+    showing a higher number of filter words `31261533_x.pdf` did not
+    include controls classifying it as a case-control study). The
+    case-control papers displayed on average 55 times the filter words.
+
+<!-- -->
+
+    20
+
+1.  **Copy/move**: For this example the PDF files stay in their
+    respective pdf folder.
+
+<!-- -->
+
+    no copy/move
+
 ##### Parameters:
 
 <img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface.parameters_MTX_example.png" width="100%" style="display: block; margin: auto;" />
 <center>
-`PDE_analyzer_i()` user interface - Parameters
+`PDE_analyzer_i()` user interface - Parameters tab filled for MTX
+example
 </center>
 
 </br>
@@ -796,83 +945,12 @@ Shift to select multiple).
 
     9999 
 
-1.  **Filter words?**: For this analysis, filter words were used to only
-    analyze articles with case-control data.
-
-<!-- -->
-
-    yes 
-
-1.  **Filter words**: These words should be found at a high frequency in
-    case-control papers. The filter words are only separated by
-    semicolons (no spaces for separation).
-
-<!-- -->
-
-    cohort;case-control;group;study population;study participants 
-
-1.  **Filter words case sensitive**: Since it does not matter if a word
-    is found capitalized at the beginning of a sentence, in a heading or
-    within a sentence the search is not case-sensitive.
-
-<!-- -->
-
-    no
-
-1.  **Filter word times**: Kept at standard value of 20. Negative
-    controls included an average of 2.4 times the filter words (despite
-    showing a higher number of filter words `31261533_x.pdf` did not
-    include controls classifying it as a case-control study). The
-    case-control papers displayed on average 55 times the filter words.
-
-<!-- -->
-
-    20
-
-1.  **Search words?**: The search words were used to extract all
-    Methotrexate relevant information.
-
-<!-- -->
-
-    yes
-
-1.  **Search words**: The list of search words includes all aliases and
-    the most common and distinctive abbreviation of Methotrexate.
-    Parentheses and a vertical line were used to account for positioning
-    at the beginning of the sentence since abbreviations are commonly
-    case-sensitive and only found in capital letters. The search words
-    are only separated by semicolons (no spaces for separation).
-
-<!-- -->
-
-    (M|m)ethotrexate;(T|t)rexal;(R|r)heumatrex;(O|o)trexup
-
-1.  **Search words case sensitive**: As explained above, the search
-    words are case-sentive due to an abbreviation being included.
-
-<!-- -->
-
-    yes
-
-1.  **Number of sentences before and after**: For simplicity reasons,
-    only the sentences with the search words were extracted.  
-
-<!-- -->
-
-    0
-
-1.  **Evaluate abbreviations?**: Abbreviations of Methotrexate such as
-    MTX should also be detected in the document.
-
-<!-- -->
-
-    yes
-
-##### Documentation/Debugging:
+##### Documentation:
 
 <img src="vignettes/scrnshots/Screenshot_PDE_analyzer_user_interface.docus_MTX_example.png" width="100%" style="display: block; margin: auto;" />
 <center>
-`PDE_analyzer_i()` user interface - Documentation/Debugging
+`PDE_analyzer_i()` user interface - Documentation tab filled for MTX
+example
 </center>
 
 </br>
@@ -953,7 +1031,8 @@ display status updates:
     Analyses are complete.
 
 As mentioned above, the resulting files should be identical to the files
-found in `examples/MTX_output/.`
+found in `examples/MTX_output/.` The file `PDE_analyzer_word_stats.csv`
+contains search word and filter word statistics.
 
 ------------------------------------------------------------------------
 
