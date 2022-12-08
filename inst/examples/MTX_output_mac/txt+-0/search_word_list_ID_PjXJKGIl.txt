@@ -1,0 +1,5 @@
+(M|m)ethotrexate,(T|t)rexal,(R|r)heumatrex,(O|o)trexup
+(M|m)ethotrexate
+(T|t)rexal
+(R|r)heumatrex
+(O|o)trexup

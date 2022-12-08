@@ -1,0 +1,6 @@
+"pdf_file_name","pdf_word_count","pdf_page_count","pdf_filterword_total","pdf_searchword_total","FW_ic_nregex:cohort","FW_ic_nregex:case-control","FW_ic_nregex:group","FW_ic_nregex:study population","FW_ic_nregex:study participants","SW_nic_regex:(M|m)ethotrexate","SW_nic_regex:(T|t)rexal","SW_nic_regex:(R|r)heumatrex","SW_nic_regex:(O|o)trexup","pdf_sentences_w_searchwords"
+"29973177_!",3374,6,58,99,0,0,58,0,0,99,0,0,0,47
+"31083238_!",5740,8,33,21,0,0,33,0,0,21,0,0,0,18
+"31261533_x",4217,6,9,NA,2,0,5,2,0,NA,NA,NA,NA,NA
+"00000000_x",0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+"99999999_x",0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
