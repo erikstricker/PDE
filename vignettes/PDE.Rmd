@@ -191,8 +191,11 @@ can also extract all tables detected in the paper (choose this option here). In 
 search words field should remain empty. 
 
 3. **Search words**: Type in the list of search words separated by ";" without spaces in
-between.  
-Argument for `PDE_extr_data_from_pdfs()`: `search.words`  
+between. Additionally, search word categories can be added by including the category
+name before the first search word of each category surrounded by "%:" and ":%",
+e.g., %:category:%first search word. For each category word counts will be summarized in the
+PDE_analyzer_word_stats.csv file.
+Arguments for `PDE_extr_data_from_pdfs()`: `search.words` and  `search.word.categories`
 
 4. **Search words case sensitive**: E.g., for "Word", if "no" was chosen then "word",
 "WORD", "Word", etc., will be detected, if "yes" was chosen only "Word" will be detected.  

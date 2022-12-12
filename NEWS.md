@@ -1,3 +1,6 @@
+# PDE 1.4.2
+*Fixed problem with outputting to locations with spaces
+
 # PDE 1.4.1
 * Added message box that opens when using PDE_analyzer_i() and xpdf command line tools are not installed
 * Fixed issue with correct numbering in PDE_analyzer_word_stat table

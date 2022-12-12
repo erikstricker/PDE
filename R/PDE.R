@@ -13,16 +13,6 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-## DONE open up dialog if xpdf not installed
-## DONE interface
-## DONE trouble shoot numbering
-## DONE special characters in names
-## DONE fixed PDE_check_install_error
-## DONE fixed error for small tables
-## DONE addded percentage as filter word threshold option
-## TODO add assigned category to stats
-## TODO check why filterwords are at the end
-
 #' PDE: Extract Tables and Sentences from PDF Files.
 #' 
 #' The package includes two main components: 1) The PDE analyzer performs the
@@ -40,7 +30,7 @@
 NULL
 #> NULL
 
-## 1.4.1
+## 1.4.2
 
 ## declare global variables
 PDE.globals <- new.env()
@@ -359,6 +349,8 @@ PDE_check_Xpdf_install <- function(sysname=NULL, verbose=TRUE){
 #'@param bin String. In case the function returns "Unknown OS" the bin of the operational system
 #' can be set manually. Allowed options are "64", and "32". Default: \code{NULL}.
 #'@param verbose Logical. Indicates whether messages will be printed in the console. Default: \code{TRUE}.
+#'@param permission Numerical. If set to 0 the user is ask for a permission to
+#' download Xpdftools. If set to 1, no user input is required. Default: \code{0}.
 #'
 #'
 #'@return The function returns a Boolean for the installation status and a message in case 
@@ -530,25 +522,31 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
 #'  is detected in the article.
 #'   Default: \code{""}.
 #'@param regex.fw Logical. If TRUE filter words will follow the regex rules
-#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'  Default = \code{TRUE}.
 #'@param ignore.case.fw Logical. Are the filter words case-sensitive (does
 #'  capitalization matter)? Default: \code{FALSE}.
 #'@param filter.word.times Numeric or string. Can either be expressed as absolute number or percentage 
 #'  of the total number of words (by adding the "%" sign). The minimum number of hits described for
-#'  \code{filter.words} for a paper to be further analyzed. Default: \code{0.2%}.
+#'  \code{filter.words} for a paper to be further analyzed. Default: \code{0.2\%}.
 #'@param table.heading.words List of strings. Different than standard (TABLE,
 #'  TAB or table plus number) headings to be detected. Regex rules apply (see
 #'  also
-#'  \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#'  \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'   Default = \code{""}.
 #'@param ignore.case.th Logical. Are the additional table headings (see
 #'  \code{table.heading.words}) case-sensitive (does capitalization matter)?
 #'  Default = \code{FALSE}.
 #'@param search.words List of strings. List of search words. To extract all
 #'  tables from the PDF file leave \code{search.words = ""}. 
+#'@param search.word.categories List of strings. List of categories with the 
+#'  same length as the list of search words. Accordingly, each search word can be 
+#'  assigned to a category, of which the word counts will be summarized in the
+#'  \code{PDE_analyzer_word_stats.csv} file. If search.word.categories is a
+#'  different length than search.words the parameter will be ignored.
+#'  Default: \code{NULL}.
 #'@param regex.sw Logical. If TRUE search words will follow the regex rules
-#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'  Default = \code{TRUE}.
 #'@param ignore.case.sw Logical. Are the search words case-sensitive (does
 #'  capitalization matter)? Default: \code{FALSE}.
@@ -1788,7 +1786,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
         pdf_searchword_total <- NA
         pdf_searchword_times <- rep(NA,length(pdf_searchwords))
         search.word.category_total <- NULL
-        if (!is.null(search.word.categories)){
+        if (!is.null(search.word.categories) && length(search.words) == length(search.word.categories)){
           for (swc in 1:length(unique(search.word.categories))){
             search.word.category_total[swc] <- sum(pdf_searchword_times[search.word.categories %in% unique(search.word.categories)[swc]], na.rm = TRUE)
           }
@@ -2159,7 +2157,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
             pdf_searchword_total <- 0
             pdf_searchword_times <- rep(0,length(pdf_searchwords))
             search.word.category_total <- NULL
-            if (!is.null(search.word.categories)){
+            if (!is.null(search.word.categories) && length(search.words) == length(search.word.categories)){
               for (swc in 1:length(unique(search.word.categories))){
                 search.word.category_total[swc] <- sum(pdf_searchword_times[search.word.categories %in% unique(search.word.categories)[swc]], na.rm = TRUE)
               }
@@ -3533,9 +3531,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
               i_num <- as.character(i)
             }
             
-            outputtable.name <- gsub(" ","_",paste0(out,"/tables/",id,
+            outputtable.name <- paste0(out,gsub(" ","_",paste0("/tables/",id,
                                                     "_#", i_num, "_",
-                                                    tablenum))
+                                                    tablenum)))
             if (nchar(outputtable.name) > 255) {
               print_message <- paste0("The file path of ",paste0(outputtable.name,
                                                                  out.table.ext),
@@ -3685,7 +3683,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           pdf_searchword_total <- sum(pdf_searchword_times)
           sw_in_tab_counted <- TRUE
           search.word.category_total <- NULL
-          if (!is.null(search.word.categories)){
+          if (!is.null(search.word.categories) && length(search.words) == length(search.word.categories)){
             for (swc in 1:length(unique(search.word.categories))){
               search.word.category_total[swc] <- sum(pdf_searchword_times[search.word.categories %in% unique(search.word.categories)[swc]], na.rm = TRUE)
             }
@@ -3724,7 +3722,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
         pdf_searchword_times <- NA
         pdf_searchwords <- "search_word_list"
         search.word.category_total <- NULL
-        if (!is.null(search.word.categories)){
+        if (!is.null(search.word.categories) && length(search.words) == length(search.word.categories)){
           for (swc in 1:length(unique(search.word.categories))){
             search.word.category_total[swc] <- sum(pdf_searchword_times[search.word.categories %in% unique(search.word.categories)[swc]], na.rm = TRUE)
           }
@@ -3738,7 +3736,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
       pdf_searchword_total <- NA
       pdf_searchwords <- "search_word_list"
       search.word.category_total <- NULL
-      if (!is.null(search.word.categories)){
+      if (!is.null(search.word.categories) && length(search.words) == length(search.word.categories)){
         for (swc in 1:length(unique(search.word.categories))){
           search.word.category_total[swc] <- sum(pdf_searchword_times[search.word.categories %in% unique(search.word.categories)[swc]], na.rm = TRUE)
         }
@@ -3786,9 +3784,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
             t_num <- as.character(t)
           }
           
-          outputtable.name <- gsub(" ","_",paste0(out,"/tables/",id,
+          outputtable.name <- paste0(out,gsub(" ","_",paste0("/tables/",id,
                                                   "_#", t_num, "_",
-                                                  tablenum))
+                                                  tablenum)))
           if (nchar(outputtable.name) > 255) {
             print_message <- paste0("The file path of ",paste0(outputtable.name,
                                                                out.table.ext),
@@ -3915,9 +3913,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           t_num <- as.character(t)
         }
         
-        outputtable.name <- gsub(" ","_",paste0(out,"/tables/",id,
+        outputtable.name <- paste0(out,gsub(" ","_",paste0("/tables/",id,
                                                 "_#", t_num, "_",
-                                                tablenum))
+                                                tablenum)))
         if (nchar(outputtable.name) > 255) {
           print_message <- paste0("The file path of ",paste0(outputtable.name,
                                                              out.table.ext),
@@ -4087,7 +4085,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
         }
         pdf_searchword_total <- sum(pdf_searchword_times)
         search.word.category_total <- NULL
-        if (!is.null(search.word.categories)){
+        if (!is.null(search.word.categories) && length(search.words) == length(search.word.categories)){
           for (swc in 1:length(unique(search.word.categories))){
             search.word.category_total[swc] <- sum(pdf_searchword_times[search.word.categories %in% unique(search.word.categories)[swc]], na.rm = TRUE)
           }
@@ -4111,7 +4109,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           }
           pdf_searchword_total <- sum(pdf_searchword_times)
           search.word.category_total <- NULL
-          if (!is.null(search.word.categories)){
+          if (!is.null(search.word.categories) && length(search.words) == length(search.word.categories)){
             for (swc in 1:length(unique(search.word.categories))){
               search.word.category_total[swc] <- sum(pdf_searchword_times[search.word.categories %in% unique(search.word.categories)[swc]], na.rm = TRUE)
             }
@@ -4338,7 +4336,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
       pdf_searchword_times <- NA
       pdf_searchwords <- "search_word_list"
       search.word.category_total <- NULL
-      if (!is.null(search.word.categories)){
+      if (!is.null(search.word.categories) && length(search.words) == length(search.word.categories)){
         for (swc in 1:length(unique(search.word.categories))){
           search.word.category_total[swc] <- sum(pdf_searchword_times[search.word.categories %in% unique(search.word.categories)[swc]], na.rm = TRUE)
         }
@@ -4381,7 +4379,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
     if (cpy_mv == "cpy"){
       dir.create(paste0(out,"/pdfs"), showWarnings = FALSE)
       dir.create(paste0(out,"/pdfs/incl_by_fw"), showWarnings = FALSE)
-      if (!is.null(search.word.categories)){
+      if (!is.null(search.word.categories) && length(search.words) == length(search.word.categories)){
         ## 1) Determine best category
         search.word.category_total <- NULL
         for (swc in 1:length(unique(search.word.categories))){
@@ -4484,25 +4482,31 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
 #'  is detected in the article.
 #'   Default: \code{""}.
 #'@param regex.fw Logical. If TRUE filter words will follow the regex rules
-#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'  Default = \code{TRUE}.
 #'@param ignore.case.fw Logical. Are the filter words case-sensitive (does
 #'  capitalization matter)? Default: \code{FALSE}.
 #'@param filter.word.times Numeric or string. Can either be expressed as absolute number or percentage 
 #'  of the total number of words (by adding the "%" sign). The minimum number of hits described for
-#'  \code{filter.words} for a paper to be further analyzed. Default: \code{0.2%}.
+#'  \code{filter.words} for a paper to be further analyzed. Default: \code{0.2\%}.
 #'@param table.heading.words List of strings. Different than standard (TABLE,
 #'  TAB or table plus number) headings to be detected. Regex rules apply (see
 #'  also
-#'  \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#'  \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'   Default = \code{""}.
 #'@param ignore.case.th Logical. Are the additional table headings (see
 #'  \code{table.heading.words}) case-sensitive (does capitalization matter)?
 #'  Default = \code{FALSE}.
 #'@param search.words List of strings. List of search words. To extract all
-#'  tables from the PDF files leave \code{search.words = ""}. 
+#'  tables from the PDF files leave \code{search.words = ""}.
+#'@param search.word.categories List of strings. List of categories with the 
+#'  same length as the list of search words. Accordingly, each search word can be 
+#'  assigned to a category, of which the word counts will be summarized in the
+#'  \code{PDE_analyzer_word_stats.csv} file. If search.word.categories is a
+#'  different length than search.words the parameter will be ignored.
+#'  Default: \code{NULL}. 
 #'@param regex.sw Logical. If TRUE search words will follow the regex rules
-#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'  Default = \code{TRUE}.
 #'@param ignore.case.sw Logical. Are the search words case-sensitive (does
 #'  capitalization matter)? Default: \code{FALSE}.
@@ -4723,7 +4727,7 @@ PDE_extr_data_from_pdfs <- function(pdfs, whattoextr,
 #'@param table.heading.words List of strings. Different than standard (TABLE,
 #'  TAB or table plus number) headings to be detected. Regex rules apply (see
 #'  also
-#'  \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#'  \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'   Default = \code{""}.
 #'@param ignore.case.th Logical. Are the additional table headings (see
 #'  \code{table.heading.words}) case-sensitive (does capitalization matter)?
@@ -4829,25 +4833,31 @@ PDE_pdfs2table <- function(pdfs, out = ".", table.heading.words = "", ignore.cas
 #'  is detected in the article.
 #'   Default: \code{""}.
 #'@param regex.fw Logical. If TRUE filter words will follow the regex rules
-#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'  Default = \code{TRUE}.
 #'@param ignore.case.fw Logical. Are the filter words case-sensitive (does
 #'  capitalization matter)? Default: \code{FALSE}.
 #'@param filter.word.times Numeric or string. Can either be expressed as absolute number or percentage 
 #'  of the total number of words (by adding the "%" sign). The minimum number of hits described for
-#'  \code{filter.words} for a paper to be further analyzed. Default: \code{0.2%}.
+#'  \code{filter.words} for a paper to be further analyzed. Default: \code{0.2\%}.
 #'@param table.heading.words List of strings. Different than standard (TABLE,
 #'  TAB or table plus number) headings to be detected. Regex rules apply (see
 #'  also
-#'  \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#'  \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'   Default = \code{""}.
 #'@param ignore.case.th Logical. Are the additional table headings (see
 #'  \code{table.heading.words}) case-sensitive (does capitalization matter)?
 #'  Default = \code{FALSE}.
 #'@param search.words List of strings. List of search words. To extract all
 #'  tables from the PDF file leave \code{search.words = ""}.
+#'@param search.word.categories List of strings. List of categories with the 
+#'  same length as the list of search words. Accordingly, each search word can be 
+#'  assigned to a category, of which the word counts will be summarized in the
+#'  \code{PDE_analyzer_word_stats.csv} file. If search.word.categories is a
+#'  different length than search.words the parameter will be ignored.
+#'  Default: \code{NULL}.
 #'@param regex.sw Logical. If TRUE search words will follow the regex rules
-#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'  Default = \code{TRUE}.
 #'@param ignore.case.sw Logical. Are the search words case-sensitive (does
 #'  capitalization matter)? Default: \code{FALSE}.
@@ -5038,16 +5048,22 @@ PDE_pdfs2table_searchandfilter <- function(pdfs, out = ".", filter.words = "", r
 #'  is detected in the article.
 #'   Default: \code{""}.
 #'@param regex.fw Logical. If TRUE filter words will follow the regex rules
-#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'  Default = \code{TRUE}.
 #'@param ignore.case.fw Logical. Are the filter words case-sensitive (does
 #'  capitalization matter)? Default: \code{FALSE}.
 #'@param filter.word.times Numeric or string. Can either be expressed as absolute number or percentage 
 #'  of the total number of words (by adding the "%" sign). The minimum number of hits described for
-#'  \code{filter.words} for a paper to be further analyzed. Default: \code{0.2%}.
+#'  \code{filter.words} for a paper to be further analyzed. Default: \code{0.2\%}.
 #'@param search.words List of strings. List of search words. 
+#'@param search.word.categories List of strings. List of categories with the 
+#'  same length as the list of search words. Accordingly, each search word can be 
+#'  assigned to a category, of which the word counts will be summarized in the
+#'  \code{PDE_analyzer_word_stats.csv} file. If search.word.categories is a
+#'  different length than search.words the parameter will be ignored.
+#'  Default: \code{NULL}.
 #'@param regex.sw Logical. If TRUE search words will follow the regex rules
-#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf}).
+#' (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
 #'  Default = \code{TRUE}.
 #'@param ignore.case.sw Logical. Are the search words case-sensitive (does
 #'  capitalization matter)? Default: \code{FALSE}.
@@ -7555,7 +7571,11 @@ PDE_analyzer_i <- function(verbose=TRUE) {
     tcltk::tkbind(l20.hint_choose_sw, "<Enter>", 
                   expression(tooltip(paste0("Type in the list of search words separated by \";\" without",
                                             " spaces in between. The list of search words includes all ",
-                                            "aliases."), 
+                                            "aliases. Additionally, search word categories can be added",
+                                            " by including the category name before the first search word,",
+                                            " of each category surrounded by \"%:\" and \":%\", e.g., ",
+                                            "%:category:%first search word. For each category word counts ",
+                                            "will be summarized in the PDE_analyzer_word_stats.csv file."), 
                                      l20.hint_choose_sw)))
     tcltk::tkbind(l21.hint_ignorecase_sw, "<Enter>", 
                   expression(tooltip(paste0("Case-sensitivity (capitalization matters) can be disabled, ",
