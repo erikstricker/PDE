@@ -202,8 +202,8 @@ Arguments for `PDE_extr_data_from_pdfs()`: `search.words` and  `search.word.cate
 Argument for `PDE_extr_data_from_pdfs()`: `ignore.case.sw`
 
 5. **Regex**: When checked search words will follow the regex rules 
-(see https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf
-(https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf)).
+(see https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf
+(https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf)).
 Argument for `PDE_extr_data_from_pdfs()`: `regex.sw`
 
 6. **Number of sentences before and after**: When 0 is chosen, only the sentence with
@@ -235,8 +235,8 @@ A hit will be counted every time a word from the list is detected in the article
 Argument for `PDE_extr_data_from_pdfs()`: `filter.words`
 
 3. **Regex**: When checked filter words will follow the regex rules 
-(see https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf
-(https://github.com/erikstricker/PDE/blob/master/inst/examples/cheetsheets/regex.pdf)).
+(see https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf
+(https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf)).
 Argument for `PDE_extr_data_from_pdfs()`: `regex.fw`
 
 4. **Filter words case sensitive**: E.g., for "Word", if "no" was chosen then "word",
