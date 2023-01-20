@@ -2095,7 +2095,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
       }
       ## test if percent or number
       pdf_word_count <- sum(sapply(gregexpr("[[:alpha:]]+", txtcontent), function(x) sum(x > 0)))
-      if (grep("%",filter.word.times)){
+      if (grepl("%",filter.word.times)){
         if (length(word.txtpos.fw)/pdf_word_count >= (as.numeric(sub("%","",filter.word.times))/100)) {
           filterwords.go <- TRUE
           print_message <- paste0(round((length(word.txtpos.fw)/pdf_word_count*100),4),
@@ -2123,7 +2123,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
       
       if (filterwords.go == FALSE){
         pdf_word_count <- sum(sapply(gregexpr("[[:alpha:]]+", txtcontent), function(x) sum(x > 0)))
-        if (grep("%",filter.word.times)){
+        if (grepl("%",filter.word.times)){
           print_message <- paste0("\'",id,".pdf\' was filtered out due to a lack of the filter words. ",
                                   round((length(word.txtpos.fw)/pdf_word_count*100),4),
                                   "% of all words were filter word(s) in ", id, ".pdf.")
@@ -2167,7 +2167,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
         if (write.txt.doc.file == TRUE) {
           dir.create(paste0(out,"/excl_by_fw"), showWarnings = FALSE)
           pdf_word_count <- sum(sapply(gregexpr("[[:alpha:]]+", txtcontent), function(x) sum(x > 0)))
-          if (grep("%",filter.word.times)){
+          if (grepl("%",filter.word.times)){
             utils::write.table(paste0("Not enough txt lines with filter word found. ",
                                       round((length(word.txtpos.fw)/pdf_word_count*100),4),
                                       "% of words were filter word(s) in ", id, ".pdf."),
@@ -2916,8 +2916,15 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
         outofbound <- FALSE
       }
       if (outofbound == FALSE) {
-        if (is.null(htmlcontent[[p]][npos, "top"]))
-          notop <- TRUE else notop <- FALSE
+        if (is.null(htmlcontent[[p]][npos, "top"])){
+          notop <- TRUE 
+        } else {
+          if (is.na(htmlcontent[[p]][npos, "top"])){
+            notop <- TRUE 
+          } else {
+            notop <- FALSE
+          }
+        }
       }
       
       if ((outofbound == TRUE) || (notop == TRUE)) {
@@ -3301,8 +3308,8 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           ## shorten the txtfirstline till hit is found
           while (leg.pos == Inf && txt.pos == Inf &&
                  txttablelines[i, "txtfirstline"] != "") {
-            txttablelines[i, "txtfirstline"] <- strtrim(txttablelines[i, "txtfirstline"],
-                                                        nchar(txttablelines[i, "txtfirstline"]) - 1)
+            txttablelines[i, "txtfirstline"] <- substr(txttablelines[i, "txtfirstline"],1,
+                                                        (nchar(txttablelines[i, "txtfirstline"]) - 1))
             txt.pos <- suppressWarnings(min(grep(txttablelines[i, "txtfirstline"],
                                                  txtcontent[start:length(txtcontent)],
                                                  fixed = TRUE))) + start - 1
@@ -3381,14 +3388,14 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
         trimed <- tabhead
         while (is.na(start)) {
           headinglength <- nchar(as.character(trimed))
-          trimed <- strtrim(as.character(trimed),
-                            headinglength - 1)
+          trimed <- substr(as.character(trimed),1,
+                            (headinglength - 1))
           headinglength <- nchar(as.character(trimed))
           lastchar <- substr(as.character(trimed),
                              headinglength, headinglength)
           while (lastchar == "\\"){
-            trimed <- strtrim(as.character(trimed),
-                              headinglength - 1)
+            trimed <- substr(as.character(trimed),1
+                              (headinglength - 1))
             headinglength <- nchar(as.character(trimed))
             lastchar <- substr(as.character(trimed),
                                headinglength, headinglength)
@@ -3426,8 +3433,8 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           ## found
           while (leg.pos == Inf && keeplayouttxt.pos ==
                  Inf && keeplayouttxttablelines[i,"txtfirstline"] != "") {
-            keeplayouttxttablelines[i, "txtfirstline"] <- strtrim(keeplayouttxttablelines[i, "txtfirstline"],
-                                                                  nchar(keeplayouttxttablelines[i, "txtfirstline"]) - 1)
+            keeplayouttxttablelines[i, "txtfirstline"] <- substr(keeplayouttxttablelines[i, "txtfirstline"],1,
+                                                                  (nchar(keeplayouttxttablelines[i, "txtfirstline"]) - 1))
             keeplayouttxt.pos <- suppressWarnings(min(grep(keeplayouttxttablelines[i, "txtfirstline"],
                                                            keeplayouttxtcontent[start:length(keeplayouttxtcontent)],
                                                            fixed = TRUE))) + start - 1
