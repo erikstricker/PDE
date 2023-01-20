@@ -1,3 +1,8 @@
+# PDE 1.4.3
+*Fixed bug with absolute filter word threshold
+*Fixed bug with very small tables towards the end of the page
+*Fixed strtrim bug
+
 # PDE 1.4.2
 *Fixed problem with outputting to locations with spaces
 
