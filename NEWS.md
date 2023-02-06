@@ -1,4 +1,10 @@
+# PDE 1.4.4
+*Added recognition of superscript and subscript in tables when extracted
+
 # PDE 1.4.3
+*Added the ability to have search word categories
+*Fixed bug with display of non-extracted tables
+*Fixed bug with overlapping tables
 *Fixed bug with absolute filter word threshold
 *Fixed bug with very small tables towards the end of the page
 *Fixed strtrim bug

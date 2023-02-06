@@ -1,5 +1,5 @@
 ## PDE: Extract Sentences and Tables from PDF Files.
-## Copyright (C) 2020-2022  Erik Stricker
+## Copyright (C) 2020-2023  Erik Stricker
 ## 
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -1933,7 +1933,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
     
     ## make a variable only with the txt content
     txthtmlcontent <- htmlcontent
-    
+    ##TODO replace superscript
     ## go through pages
     for (j in 1:length(txthtmlcontent)) {
       ## go through each html line
@@ -1943,6 +1943,74 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
         line.txthtmlcontent <- ""
         res <- try(utf8ToInt(line),silent = TRUE)
         if (inherits(res,"try-error")) line <- iconv(line, 'UTF-8', 'latin1', 'byte')
+        ##replace superscript
+        while (grepl("vertical-align:super",line)){
+          super_pos <- regexpr("vertical-align:super",line)[1]
+          ## replace the end of the superscript with "]"
+          endspan_positions <- gregexpr("</span>",line)[[1]]
+          s <- 1
+          endspan_pos <- endspan_positions[s] - super_pos
+          while (endspan_pos<0){
+            s <- s + 1
+            endspan_pos <- endspan_positions[s] - super_pos
+          }
+          endspan_pos <- endspan_pos + super_pos
+          line_list <- unlist(strsplit(line, split = ""))
+          line_list[endspan_pos] <- "]<"
+          line <- paste(line_list,collapse = "")
+          
+          ## replace the beginning of the superscript with "^["
+          endofstartspan_positions <- gregexpr(";\">",line)[[1]]
+          s <- 1
+          endofstartspan_pos <- endofstartspan_positions[s] - super_pos
+          while (endofstartspan_pos<0){
+            s <- s + 1
+            endofstartspan_pos <- endofstartspan_positions[s] - super_pos
+          }
+          endofstartspan_pos <- endofstartspan_pos + super_pos
+          
+          line_before_super <- sub("vertical-align:super.*", "", line)
+          startspan_pos <- max(gregexpr("<span id=",line_before_super)[[1]])
+          line_list <- unlist(strsplit(line, split = ""))
+          line_list[endofstartspan_pos+2] <- ">^["
+          line <- paste(line_list,collapse = "")
+          line <- sub("vertical-align:super", "vertical-align:baseline", line)
+          # line <- sub(paste0("^(.{",as.numeric(startspan_pos)-1,"})(.{",as.numeric(endofstartspan_pos-startspan_pos+2),"})."),"\\1^[",
+          #             line)
+        }
+        ##replace subscript
+        while (grepl("vertical-align:sub",line)){
+          sub_pos <- regexpr("vertical-align:sub",line)[1]
+          ## replace the end of the subscript with "]"
+          endspan_positions <- gregexpr("</span>",line)[[1]]
+          s <- 1
+          endspan_pos <- endspan_positions[s] - sub_pos
+          while (endspan_pos<0){
+            s <- s + 1
+            endspan_pos <- endspan_positions[s] - sub_pos
+          }
+          endspan_pos <- endspan_pos + sub_pos
+          line_list <- unlist(strsplit(line, split = ""))
+          line_list[endspan_pos] <- "]<"
+          line <- paste(line_list,collapse = "")
+          
+          ## replace the beginning of the subscript with "_["
+          endofstartspan_positions <- gregexpr(";\">",line)[[1]]
+          s <- 1
+          endofstartspan_pos <- endofstartspan_positions[s] - sub_pos
+          while (endofstartspan_pos<0){
+            s <- s + 1
+            endofstartspan_pos <- endofstartspan_positions[s] - sub_pos
+          }
+          endofstartspan_pos <- endofstartspan_pos + sub_pos
+          
+          line_before_sub <- sub("vertical-align:sub.*", "", line)
+          startspan_pos <- max(gregexpr("<span id=",line_before_sub)[[1]])
+          line_list <- unlist(strsplit(line, split = ""))
+          line_list[endofstartspan_pos+2] <- ">_["
+          line <- paste(line_list,collapse = "")
+          
+        }
         ##replace different html formating
         line <- gsub("</p>","</span>",line)
         ## replace line break with space (not optimal but better for searching)
@@ -1953,7 +2021,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
         rev.line <- intToUtf8(rev(utf8ToInt(line)))
         for (spanpos in rev(gregexpr(">naps/<",rev.line)[[1]])){
           add.txthtmlcontent <- substr(rev.line,spanpos+7, regexpr(">\"",
-                                                                   substr(rev.line,spanpos+7, 
+                                                                   substr(rev.line,spanpos+7,
                                                                           nchar(rev.line)))+spanpos+7-2)
           line.txthtmlcontent <- paste0(line.txthtmlcontent,intToUtf8(rev(utf8ToInt(add.txthtmlcontent))))
         }
