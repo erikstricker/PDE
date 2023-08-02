@@ -174,7 +174,7 @@ PDE_check_Xpdf_install <- function(sysname=NULL, verbose=TRUE){
       if (length(attributes(pdftohtml_location)$status) > 0) pdftohtml_location <- NULL
       
       pdftopng_location <- suppressWarnings(system("C:\\WINDOWS\\system32\\cmd.exe /c where pdftopng", intern = TRUE))
-      if length(attributes(pdftopng_location)$status) > 0) pdftopng_location <- NULL
+      if (length(attributes(pdftopng_location)$status) > 0) pdftopng_location <- NULL
     } else if (sysname == "Linux") {
       pdftotext_location <- show_file_path_linux("pdftotext")
       
