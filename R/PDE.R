@@ -168,13 +168,13 @@ PDE_check_Xpdf_install <- function(sysname=NULL, verbose=TRUE){
     
     if (sysname == "Windows") {
       pdftotext_location <- suppressWarnings(system("C:\\WINDOWS\\system32\\cmd.exe /c where pdftotext", intern = TRUE))
-      if ("INFO: Could not find files for the given pattern(s)." %in% pdftotext_location) pdftotext_location <- NULL
+      if (length(attributes(pdftotext_location)$status) > 0) pdftotext_location <- NULL
       
       pdftohtml_location <- suppressWarnings(system("C:\\WINDOWS\\system32\\cmd.exe /c where pdftohtml", intern = TRUE))
-      if ("INFO: Could not find files for the given pattern(s)." %in% pdftohtml_location) pdftohtml_location <- NULL
+      if (length(attributes(pdftohtml_location)$status) > 0) pdftohtml_location <- NULL
       
       pdftopng_location <- suppressWarnings(system("C:\\WINDOWS\\system32\\cmd.exe /c where pdftopng", intern = TRUE))
-      if ("INFO: Could not find files for the given pattern(s)." %in% pdftopng_location) pdftopng_location <- NULL
+      if length(attributes(pdftopng_location)$status) > 0) pdftopng_location <- NULL
     } else if (sysname == "Linux") {
       pdftotext_location <- show_file_path_linux("pdftotext")
       
