@@ -18,7 +18,7 @@ A detailed description of the elements in the user interface can be found in the
 }
 
 \examples{
- 
+
  PDE_reader_i()
- 
+
 }

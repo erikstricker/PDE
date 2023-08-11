@@ -1,27 +1,21 @@
--   <a href="#description" id="toc-description">Description</a>
--   <a href="#installation" id="toc-installation">Installation</a>
--   <a href="#execution" id="toc-execution">Execution</a>
--   <a href="#quick-guide-to-get-started"
-    id="toc-quick-guide-to-get-started">Quick guide to get started</a>
-    -   <a href="#pde_analyzer_i" id="toc-pde_analyzer_i">PDE_analyzer_i()</a>
-    -   <a href="#pde_reader_i" id="toc-pde_reader_i">PDE_reader_i()</a>
--   <a href="#parameters" id="toc-parameters">Parameters</a>
-    -   <a href="#pde_analyzer_i-1"
-        id="toc-pde_analyzer_i-1">PDE_analyzer_i()</a>
-    -   <a href="#pde_reader_i-1" id="toc-pde_reader_i-1">PDE_reader_i()</a>
--   <a href="#troubleshoot" id="toc-troubleshoot">Troubleshoot</a>
-    -   <a
-        href="#error-when-starting-interactive-user-interface-on-mac-failed-to-allocate-tcl-font"
-        id="toc-error-when-starting-interactive-user-interface-on-mac-failed-to-allocate-tcl-font">Error
-        when starting interactive user interface on Mac (failed to allocate tcl
-        font)</a>
--   <a href="#example" id="toc-example">Example</a>
-    -   <a href="#process-methotrexate-articles-with-the-pde_analyzer_i"
-        id="toc-process-methotrexate-articles-with-the-pde_analyzer_i">Process
-        Methotrexate articles with the PDE_analyzer_i()</a>
-    -   <a href="#visualize-extracted-methotrexate-data-with-the-pde_reader_i"
-        id="toc-visualize-extracted-methotrexate-data-with-the-pde_reader_i">Visualize
-        extracted Methotrexate data with the PDE_reader_i()</a>
+-   [Description](#description)
+-   [Installation](#installation)
+-   [Execution](#execution)
+-   [Quick guide to get started](#quick-guide-to-get-started)
+    -   [PDE\_analyzer\_i()](#pde_analyzer_i)
+    -   [PDE\_reader\_i()](#pde_reader_i)
+-   [Parameters](#parameters)
+    -   [PDE\_analyzer\_i()](#pde_analyzer_i-1)
+    -   [PDE\_reader\_i()](#pde_reader_i-1)
+-   [Troubleshoot](#troubleshoot)
+    -   [Error when starting interactive user interface on Mac (failed
+        to allocate tcl
+        font)](#error-when-starting-interactive-user-interface-on-mac-failed-to-allocate-tcl-font)
+-   [Example](#example)
+    -   [Process Methotrexate articles with the
+        PDE\_analyzer\_i()](#process-methotrexate-articles-with-the-pde_analyzer_i)
+    -   [Visualize extracted Methotrexate data with the
+        PDE\_reader\_i()](#visualize-extracted-methotrexate-data-with-the-pde_reader_i)
 
 ------------------------------------------------------------------------
 
@@ -263,7 +257,13 @@ required files
     all tables detected in the paper (choose this option here). In the
     later case, the search words field should remain empty.
 
-3.  **Search words**: Type in the list of search words separated by “;”
+3.  **Save table by category**: If search word categories are added and
+    table extraction is selected, the extracted tables can be saved in
+    different sub-folders according to the category of the detected
+    search word. Arguments for `PDE_extr_data_from_pdfs()`:
+    `save.tab.by.category`
+
+4.  **Search words**: Type in the list of search words separated by “;”
     without spaces in between. Additionally, search word categories can
     be added by including the category name before the first search word
     of each category surrounded by “%:” and “:%”, e.g.,
@@ -272,18 +272,18 @@ required files
     `PDE_extr_data_from_pdfs()`: `search.words` and
     `search.word.categories`
 
-4.  **Search words case sensitive**: E.g., for “Word”, if “no” was
+5.  **Search words case sensitive**: E.g., for “Word”, if “no” was
     chosen then “word”, “WORD”, “Word”, etc., will be detected, if “yes”
     was chosen only “Word” will be detected.  
     Argument for `PDE_extr_data_from_pdfs()`: `ignore.case.sw`
 
-5.  **Regex**: When checked search words will follow the regex rules
+6.  **Regex**: When checked search words will follow the regex rules
     (see
     <https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf>
     (<https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf>)).
     Argument for `PDE_extr_data_from_pdfs()`: `regex.sw`
 
-6.  **Number of sentences before and after**: When 0 is chosen, only the
+7.  **Number of sentences before and after**: When 0 is chosen, only the
     sentence with the search word is extracted. If any number n is
     chosen, n number of sentences before and n number of sentences after
     the sentence with the search word will be extracted. A sentence is
@@ -291,7 +291,7 @@ required files
     subsequent space).  
     Argument for `PDE_extr_data_from_pdfs()`: `context`
 
-7.  **Evaluate abbreviations?**: If “yes” was chosen, all abbreviations
+8.  **Evaluate abbreviations?**: If “yes” was chosen, all abbreviations
     that were used in the PDF documents for the search words will be
     saved and then replace by `abbreviation (search word)$*`, e.g.,
     `MTX` will be replaced by `MTX (Methotrexate)$*`. In addition plural

@@ -36,18 +36,18 @@ Default = \code{FALSE}.}
 
 \item{out.table.format}{String. Output file format. Either comma separated
 file \code{.csv} or tab separated file \code{.tsv}. The encoding indicated
-in parantheses should be selected according to the operational system 
-exported tables are opened in, i.e., Windows: \code{"(WINDOWS-1252)"}; Mac: 
-\code{(macintosh)}; Linux: \code{(UTF-8)}. Default: \code{".csv"} and 
+in parantheses should be selected according to the operational system
+exported tables are opened in, i.e., Windows: \code{"(WINDOWS-1252)"}; Mac:
+\code{(macintosh)}; Linux: \code{(UTF-8)}. Default: \code{".csv"} and
 encoding depending on the operational system.}
 
 \item{dev_x}{Numeric. For a table the size of indention which would be
 considered the same column. Default: \code{20}.}
 
 \item{dev_y}{Numeric. For a table the vertical distance which would be
-considered the same row. Can be either a number or set to dynamic detection 
-[9999], in which case the font size is used to detect which words are in the 
-same row. 
+considered the same row. Can be either a number or set to dynamic detection
+[9999], in which case the font size is used to detect which words are in the
+same row.
 Default: \code{9999}.}
 
 \item{write.table.locations}{Logical. If \code{TRUE}, a separate file with the
@@ -60,7 +60,7 @@ PDF file but is an image or cannot be read, the page with the table with be
 exported as a png. Default: \code{FALSE}.}
 
 \item{delete}{Logical. If \code{TRUE}, the intermediate \strong{txt},
-\strong{keeplayouttxt} and \strong{html} copies of the PDF file will be 
+\strong{keeplayouttxt} and \strong{html} copies of the PDF file will be
 deleted. Default: \code{TRUE}.}
 
 \item{verbose}{Logical. Indicates whether messages will be printed in the console. Default: \code{TRUE}.}

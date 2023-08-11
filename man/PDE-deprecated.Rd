@@ -11,8 +11,8 @@ of \sQuote{PDE} only, and will be defunct at the next release.
 The following functions are deprecated and will be made defunct; use
 the replacement indicated below:
   \itemize{
-    
+
     \item{PDE_path: \code{system.file(package = "PDE")}}
-    
+
   }
 }

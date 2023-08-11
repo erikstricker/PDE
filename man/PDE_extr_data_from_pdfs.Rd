@@ -17,6 +17,7 @@ PDE_extr_data_from_pdfs(
   search.words,
   search.word.categories = NULL,
   regex.sw = TRUE,
+  save.tab.by.category = FALSE,
   ignore.case.sw = FALSE,
   eval.abbrevs = TRUE,
   out.table.format = ".csv (WINDOWS-1252)",
@@ -56,7 +57,7 @@ is detected in the article.
 \item{ignore.case.fw}{Logical. Are the filter words case-sensitive (does
 capitalization matter)? Default: \code{FALSE}.}
 
-\item{filter.word.times}{Numeric or string. Can either be expressed as absolute number or percentage 
+\item{filter.word.times}{Numeric or string. Can either be expressed as absolute number or percentage
 of the total number of words (by adding the "%" sign). The minimum number of hits described for
 \code{filter.words} for a paper to be further analyzed. Default: \code{0.2\%}.}
 
@@ -73,8 +74,8 @@ Default = \code{FALSE}.}
 \item{search.words}{List of strings. List of search words. To extract all
 tables from the PDF files leave \code{search.words = ""}.}
 
-\item{search.word.categories}{List of strings. List of categories with the 
-same length as the list of search words. Accordingly, each search word can be 
+\item{search.word.categories}{List of strings. List of categories with the
+same length as the list of search words. Accordingly, each search word can be
 assigned to a category, of which the word counts will be summarized in the
 \code{PDE_analyzer_word_stats.csv} file. If search.word.categories is a
 different length than search.words the parameter will be ignored.
@@ -83,6 +84,11 @@ Default: \code{NULL}.}
 \item{regex.sw}{Logical. If TRUE search words will follow the regex rules
 (see \url{https://github.com/erikstricker/PDE/blob/master/inst/examples/cheatsheets/regex.pdf}).
  Default = \code{TRUE}.}
+
+\item{save.tab.by.category}{Logical. Can only be used with search.word.categories.
+If set to TRUE, tables that carry search words will be saved in sub-folders 
+according to the search word category of the detected search word.
+Default: \code{FALSE}.}
 
 \item{ignore.case.sw}{Logical. Are the search words case-sensitive (does
 capitalization matter)? Default: \code{FALSE}.}
@@ -93,18 +99,18 @@ Default: \code{TRUE}.}
 
 \item{out.table.format}{String. Output file format. Either comma separated
 file \code{.csv} or tab separated file \code{.tsv}. The encoding indicated
-in parantheses should be selected according to the operational system 
-exported tables are opened in, i.e., Windows: \code{"(WINDOWS-1252)"}; Mac: 
-\code{(macintosh)}; Linux: \code{(UTF-8)}. Default: \code{".csv"} and 
+in parantheses should be selected according to the operational system
+exported tables are opened in, i.e., Windows: \code{"(WINDOWS-1252)"}; Mac:
+\code{(macintosh)}; Linux: \code{(UTF-8)}. Default: \code{".csv"} and
 encoding depending on the operational system.}
 
 \item{dev_x}{Numeric. For a table the size of indention which would be
 considered the same column. Default: \code{20}.}
 
 \item{dev_y}{Numeric. For a table the vertical distance which would be
-considered the same row. Can be either a number or set to dynamic detection 
-[9999], in which case the font size is used to detect which words are in the 
-same row. 
+considered the same row. Can be either a number or set to dynamic detection
+[9999], in which case the font size is used to detect which words are in the
+same row.
 Default: \code{9999}.}
 
 \item{context}{Numeric. Number of sentences extracted before and after the
@@ -121,19 +127,19 @@ PDF file but is an image or cannot be read, the page with the table with be
 exported as a png. Default: \code{TRUE}.}
 
 \item{write.tab.doc.file}{Logical. If \code{TRUE}, if search words are used
-for table detection and no search words were found in the tables of a PDF 
+for table detection and no search words were found in the tables of a PDF
 file, a \strong{no.table.w.search.words}. Default: \code{TRUE}.}
 
 \item{write.txt.doc.file}{Logical. If \code{TRUE}, if no search words were
 found in the sentences of a PDF file, a file will be created with the PDF
 filename followed by \strong{no.txt.w.search.words}. If the PDF file is
 empty, a file will be created with the PDF filename followed by
-\strong{no.content.detected}. If the filter word threshold is not met, 
-a file will be created with the PDF filename followed by 
+\strong{no.content.detected}. If the filter word threshold is not met,
+a file will be created with the PDF filename followed by
 \strong{no.txt.w.filter.words}. Default: \code{TRUE}.}
 
 \item{delete}{Logical. If \code{TRUE}, the intermediate \strong{txt},
-\strong{keeplayouttxt} and \strong{html} copies of the PDF files will be 
+\strong{keeplayouttxt} and \strong{html} copies of the PDF files will be
 deleted. Default: \code{TRUE}.}
 
 \item{cpy_mv}{String. Either "nocpymv", "cpy", or "mv". If filter words are used in the

@@ -42,14 +42,14 @@ is detected in the article.
 \item{ignore.case.fw}{Logical. Are the filter words case-sensitive (does
 capitalization matter)? Default: \code{FALSE}.}
 
-\item{filter.word.times}{Numeric or string. Can either be expressed as absolute number or percentage 
+\item{filter.word.times}{Numeric or string. Can either be expressed as absolute number or percentage
 of the total number of words (by adding the "%" sign). The minimum number of hits described for
 \code{filter.words} for a paper to be further analyzed. Default: \code{0.2\%}.}
 
 \item{search.words}{List of strings. List of search words.}
 
-\item{search.word.categories}{List of strings. List of categories with the 
-same length as the list of search words. Accordingly, each search word can be 
+\item{search.word.categories}{List of strings. List of categories with the
+same length as the list of search words. Accordingly, each search word can be
 assigned to a category, of which the word counts will be summarized in the
 \code{PDE_analyzer_word_stats.csv} file. If search.word.categories is a
 different length than search.words the parameter will be ignored.
@@ -68,9 +68,9 @@ Default: \code{TRUE}.}
 
 \item{out.table.format}{String. Output file format. Either comma separated
 file \code{.csv} or tab separated file \code{.tsv}. The encoding indicated
-in parantheses should be selected according to the operational system 
-exported tables are opened in, i.e., Windows: \code{"(WINDOWS-1252)"}; Mac: 
-\code{(macintosh)}; Linux: \code{(UTF-8)}. Default: \code{".csv"} and 
+in parantheses should be selected according to the operational system
+exported tables are opened in, i.e., Windows: \code{"(WINDOWS-1252)"}; Mac:
+\code{(macintosh)}; Linux: \code{(UTF-8)}. Default: \code{".csv"} and
 encoding depending on the operational system.}
 
 \item{context}{Numeric. Number of sentences extracted before and after the
@@ -81,12 +81,12 @@ the search word is extracted. Default: \code{0}.}
 found in the sentences of a PDF file, a file will be created with the PDF
 filename followed by \strong{no.txt.w.search.words}. If the PDF file is
 empty, a file will be created with the PDF filename followed by
-\strong{no.content.detected}. If the filter word threshold is not met, 
-a file will be created with the PDF filename followed by 
+\strong{no.content.detected}. If the filter word threshold is not met,
+a file will be created with the PDF filename followed by
 \strong{no.txt.w.filter.words}. Default: \code{TRUE}.}
 
 \item{delete}{Logical. If \code{TRUE}, the intermediate \strong{txt},
-\strong{keeplayouttxt} and \strong{html} copies of the PDF file will be 
+\strong{keeplayouttxt} and \strong{html} copies of the PDF file will be
 deleted. Default: \code{TRUE}.}
 
 \item{cpy_mv}{String. Either "nocpymv", "cpy", or "mv". If filter words are used in the

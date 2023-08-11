@@ -7,13 +7,13 @@
 PDE_check_Xpdf_install(sysname = NULL, verbose = TRUE)
 }
 \arguments{
-\item{sysname}{String. In case the function returns "Unknown OS" the sysname can be set manually. 
+\item{sysname}{String. In case the function returns "Unknown OS" the sysname can be set manually.
 Allowed options are "Windows", "Linux",  "SunOS" for Solaris, and "Darwin" for Mac. Default: \code{NULL}.}
 
 \item{verbose}{Logical. Indicates whether messages will be printed in the console. Default: \code{TRUE}.}
 }
 \value{
-The function returns a Boolean for the installation status and a message in case 
+The function returns a Boolean for the installation status and a message in case
 the commands are not detected.
 }
 \description{

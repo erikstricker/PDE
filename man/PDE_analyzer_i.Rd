@@ -10,12 +10,12 @@ PDE_analyzer_i(verbose = TRUE)
 \item{verbose}{Logical. Indicates whether messages will be printed in the console. Default: \code{TRUE}.}
 }
 \description{
-The \code{PDE_analyzer_i} provides a user interface for 
+The \code{PDE_analyzer_i} provides a user interface for
 the sentence and table extraction from multiple PDF files.
 }
 \section{Note}{
 
-A detailed description of the elements in the user interface 
+A detailed description of the elements in the user interface
 can be found in the markdown file (README_PDE.md).
 }
 

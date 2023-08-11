@@ -12,7 +12,7 @@ PDE_install_Xpdftools4.02(
 )
 }
 \arguments{
-\item{sysname}{String. In case the function returns "Unknown OS" the sysname can be set manually. 
+\item{sysname}{String. In case the function returns "Unknown OS" the sysname can be set manually.
 Allowed options are "Windows", "Linux", "SunOS" for Solaris, and "Darwin" for Mac. Default: \code{NULL}.}
 
 \item{bin}{String. In case the function returns "Unknown OS" the bin of the operational system
@@ -24,7 +24,7 @@ can be set manually. Allowed options are "64", and "32". Default: \code{NULL}.}
 download Xpdftools. If set to 1, no user input is required. Default: \code{0}.}
 }
 \value{
-The function returns a Boolean for the installation status and a message in case 
+The function returns a Boolean for the installation status and a message in case
 the commands are not installed.
 }
 \description{

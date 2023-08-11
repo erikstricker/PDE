@@ -1,0 +1,27 @@
+variable	value
+whattoextr	txtandtab
+pdfs	examples/Methotrexate
+outputfolder	examples/MTX_output+-0_test_tables_separated
+table.heading.words	
+ignore.case.th	FALSE
+filter.words	(M|m)ethotrexate;(T|t)rexal;(R|r)heumatrex;(O|o)trexup
+regex.fw	TRUE
+ignore.case.fw	TRUE
+filter.word.times	0.2%
+search.words	%:characteristic:%characteristic;%:outcome:%outcome
+save.tab.by.category	TRUE
+regex.sw	FALSE
+ignore.case.sw	FALSE
+eval.abbrevs	TRUE
+write.table.locations	TRUE
+cpy_mv	nocpymv
+delete	TRUE
+exp.nondetc.tabs	TRUE
+out.table.format	.csv (WINDOWS-1252)
+dev_x	20
+dev_y	9999
+context	0
+write.tab.doc.file	TRUE
+write.txt.doc.file	TRUE
+l15.filter.words.rbValue	yes
+l19.rbValue	searchwords

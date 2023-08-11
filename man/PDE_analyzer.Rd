@@ -50,7 +50,7 @@ PDF files.
  ## requires user file choice:
  PDE_analyzer()
 }
- 
+
 }
 \seealso{
 \code{\link{PDE_extr_data_from_pdfs}}

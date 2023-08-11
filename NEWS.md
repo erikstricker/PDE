@@ -1,5 +1,13 @@
+# PDE 1.4.6
+*added save.tab.by.category variable to seperate tables according to search word found in
+
+# PDE 1.4.5
+*Fixed PDF recognition in PDE_reader_i
+*Added ability to separate pdfs according to category
+
 # PDE 1.4.4
 *Added recognition of superscript and subscript in tables when extracted
+*Fixed issue with international Windows version xpdf install
 
 # PDE 1.4.3
 *Added the ability to have search word categories
