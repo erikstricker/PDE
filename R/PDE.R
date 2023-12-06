@@ -3754,6 +3754,8 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
 
   ## 7.1) Second search of search words in htmllines -----------------------------------------------
 
+  processed.tab.category <- character(0)
+
   if (filterwords.go == TRUE &&
       integrity.indicator == TRUE &&
       nrow(as.data.frame((htmltablelines))) > 0 && ncol(as.data.frame((htmltablelines))) > 0 &&
