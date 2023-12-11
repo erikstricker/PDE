@@ -1,3 +1,7 @@
+# PDE 1.4.7
+*fixed bug with save.tab.by.category variable
+*fixed issue with intToUtf8(0xFB01) - intToUtf8(0xFB06) which produce merge letters
+
 # PDE 1.4.6
 *added save.tab.by.category variable to seperate tables according to search word found in
 
