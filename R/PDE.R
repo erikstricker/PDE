@@ -31,7 +31,7 @@
 NULL
 #> NULL
 
-## 1.4.7
+## 1.4.8
 
 ## TODO save progress with tsv file
 ## TODO export as excel file
@@ -113,24 +113,24 @@ PDE_check_Xpdf_install <- function(sysname=NULL, verbose=TRUE){
 
   if (file.exists(xpdf_config_location)){
     pdftotext_location <- grep("pdftotext",readLines(xpdf_config_location), value = TRUE)
-    if (!length(pdftotext_location) > 0){
+    if (length(pdftotext_location) > 0){
       if (file.exists(pdftotext_location) == FALSE) pdftotext_location <- NULL
     } else {
       pdftotext_location <- NULL
     }
 
     pdftohtml_location <- grep("pdftohtml",readLines(xpdf_config_location), value = TRUE)
-    if (!length(pdftohtml_location) > 0){
+    if (length(pdftohtml_location) > 0){
       if (file.exists(pdftohtml_location) == FALSE) pdftohtml_location <- NULL
     } else {
       pdftohtml_location <- NULL
     }
 
     pdftopng_location <- grep("pdftopng",readLines(xpdf_config_location), value = TRUE)
-    if (!length(pdftotext_location) > 0){
+    if (length(pdftotext_location) > 0){
       if (file.exists(pdftopng_location) == FALSE) pdftopng_location <- NULL
     } else {
-      pdftotext_location <- NULL
+      pdftopng_location <- NULL
     }
   }
 

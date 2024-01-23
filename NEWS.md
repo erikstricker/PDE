@@ -1,3 +1,6 @@
+# PDE 1.4.8
+* Fixed bug with PDE_check_Xpdf_install() function
+
 # PDE 1.4.7
 *fixed bug with save.tab.by.category variable
 *fixed issue with intToUtf8(0xFB01) - intToUtf8(0xFB06) which produce merge letters
