@@ -1,7 +1,7 @@
 Package: PDE
 Type: Package
 Title: Extract Tables and Sentences from PDFs with User Interface
-Version: 1.4.8
+Version: 1.4.9
 Authors@R: person(given = "Erik", family = "Stricker", email = "erik.stricker@gmx.com", 
   role = c("aut", "cre"))
 Author: Erik Stricker [aut, cre]

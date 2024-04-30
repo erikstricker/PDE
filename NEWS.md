@@ -1,3 +1,7 @@
+# PDE 1.4.9
+*Fixed bug with table display in PDE_analyzer_i()
+*Combined continued tables
+
 # PDE 1.4.8
 * Fixed bug with PDE_check_Xpdf_install() function
 

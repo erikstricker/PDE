@@ -1,5 +1,5 @@
 ## PDE: Extract Sentences and Tables from PDF Files.
-## Copyright (C) 2020-2023  Erik Stricker
+## Copyright (C) 2020-2024  Erik Stricker
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 NULL
 #> NULL
 
-## 1.4.8
+## 1.4.9
 
 ## TODO save progress with tsv file
 ## TODO export as excel file
@@ -2753,6 +2753,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           ## Remove backreferences (\1) from tableheading
           tableheading <- remove_backref(tableheading)
 
+
           currentstartlines <- html.tablestart.pos[i]
           ## if the heading is on the site then add it to the
           ## table
@@ -2794,7 +2795,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           }
           ## Remove backreferences (\1) from tableheading
           tableheading <- remove_backref(tableheading)
-
+          
           currentstartlines <- lb.html.tablestart.pos[i]
           ## if the heading is on the site then add it to the
           ## table
@@ -2831,7 +2832,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           }
           ## Remove backreferences (\1) from tableheading
           tableheading <- remove_backref(tableheading)
-
+          
           ## from is where the heading was detected
           from <- txt.tablestart.pos[i]
           if (j > 1){
@@ -2891,6 +2892,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           }
           ## Remove backreferences (\1) from tableheading
           tableheading <- remove_backref(tableheading)
+          
 
           ## get the position of the line that has exactly the
           ## heading
@@ -3725,6 +3727,8 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
     } else {
       htmltables <- list()
     }
+    
+    
 
     ## assign table, legend or txt to the each txtline
     ##
@@ -3862,21 +3866,36 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           htmltablelines["searchwords.found"] <- "NO"
         }
 
+
         ## add all tables that have the word 'continue' in
         ## it and follow a table with the search word
         n <- 1
         while (n < nrow(htmltablelines)) {
           ## if current row is having search word and next
           ## table not
-          if ((htmltablelines[n, "searchwords.found"] == "YES") && (htmltablelines[n + 1,
+          if (((htmltablelines[n, "searchwords.found"] == "YES") || 
+              (htmltablelines[n, "searchwords.found"] == "CONTINUED")) && (htmltablelines[n + 1,
                                                                                    "searchwords.found"] == "NO")) {
             ## if next table includes 'continue'
-            if (grepl("continue", htmltables[n + 1], ignore.case = "TRUE")) {
-              htmltablelines[n + 1, "searchwords.found"] <- "YES"
+            if (grepl("continue", htmltables[[n + 1]][1,1], ignore.case = TRUE)) {
+              htmltablelines[n + 1, "searchwords.found"] <- "CONTINUED"
+              processed.tables <- c(processed.tables,htmltables[n + 1])
+              
+              ## adjust table heading if already in htmltablelines
+              counter <- 1
+              tableheading <- names(htmltables)[n + 1]
+              tableheading_new_name <- names(htmltables)[n + 1]
+              while (tableheading_new_name %in% names(processed.tables)){
+                tableheading_new_name <- paste0(tableheading,'_continued_',counter)
+                counter <- counter + 1
+              }
+              names(processed.tables)[length(names(processed.tables))] <- tableheading_new_name
             }  ## else it remains NO
           }
           n <- n + 1
         }
+        ##TODEL
+        print(names(processed.tables))
       } else{
         processed.tables <- htmltables
         names(processed.tables) <- names(htmltables)
@@ -3916,6 +3935,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
        whattoextr == "tab" ||
        whattoextr == "table" ||
        whattoextr == "txtandtab")) {
+  
 
     ## export tables ##
 
@@ -7480,7 +7500,7 @@ PDE_analyzer_i <- function(verbose=TRUE) {
           ## test which lines have title
           for (i in 1:length(all_content)){
             ## delete everything before first comma
-            rest_of_line <- sub(paste0(".*?\"",separator),",",all_content[i])
+            rest_of_line <- sub(paste0(".*?\"",separator),",",all_content[i], useBytes = TRUE)
             if (!grepl(paste0("^",separator,"+$"), rest_of_line)){
               break
             }
