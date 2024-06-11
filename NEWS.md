@@ -1,3 +1,6 @@
+# PDE 1.4.10
+*Fixed bug with subscript formating that lead to program crash
+
 # PDE 1.4.9
 *Fixed bug with table display in PDE_analyzer_i()
 *Combined continued tables

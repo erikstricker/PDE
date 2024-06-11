@@ -25,13 +25,13 @@
 #'   \code{\link{PDE_reader_i}}, \code{\link{PDE_install_Xpdftools4.02}},
 #'   \code{\link{PDE_check_Xpdf_install}}
 #'
-#' @docType package
+#' _PACKAGE
 #' @name PDE
 #' @aliases PDE-package
 NULL
 #> NULL
 
-## 1.4.9
+## 1.4.10
 
 ## TODO save progress with tsv file
 ## TODO export as excel file
@@ -1373,6 +1373,14 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
     }
     return(x)
   }
+  
+  ## set troubleshoot indicator ----------------------------
+  if (table.heading.words == "@erikstricker"){
+    table.heading.words = ""
+    output_error_tracker = TRUE
+  } else {
+    output_error_tracker = FALSE
+  }
 
   ## set all indicator variables ---------------------------
   integrity.indicator <- TRUE ## indicates if txt, keeplayouttxt and html copy of the PDF file are created correctly
@@ -1437,6 +1445,10 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
 
   ## 1) Create txt and html copies of PDF file ---------------------------------------
   ## test of Xpdftools are installed
+  if (output_error_tracker){
+    update_progress_info("Start: 1) Create txt and html copies of PDF file")
+  }
+  
   xpdf_config_location <- paste0(system.file(package = "PDE"),"/bin/XPDF_DIR.config")
   if (file.exists(xpdf_config_location)){
     pdftotext_location <- grep("pdftotext",readLines(xpdf_config_location), value = TRUE)
@@ -1531,6 +1543,10 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   ## add completion  info
   update_progress_info(print_message)
   ## 2.1) Check txt and html file integrity ----------------------------------
+  if (output_error_tracker){
+    update_progress_info("Start: 2.1) Check txt and html file integrity")
+  }
+  
   integrity.indicator <- TRUE
   ## check if html was created (if pdf is secured)
   if (!dir.exists(htmlpath) || !file.exists(paste0(htmlpath, "/index.html"))) {
@@ -1844,6 +1860,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
 
     ## 2.2) Check all the options chosen for PDE analyzer ------------------------------
     ## if general extraction (search words is undefined), then context <- 0
+    if (output_error_tracker){
+      update_progress_info("Start: 2.2) Check all the options chosen for PDE analyzer")
+    }
     if (search.words[1] == "" || search.words[1] == "*" ||
         search.words[1] == ".") {
       context <- 0
@@ -1957,6 +1976,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }
 
   ## 2.3) Make content ----------------------------------------
+  if (output_error_tracker){
+    update_progress_info("Start: 2.3) Make content")
+  }
   if (integrity.indicator == TRUE) {
     content <- list(txtcontent, keeplayouttxtcontent)
 
@@ -2037,6 +2059,7 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           line_list <- unlist(strsplit(line, split = ""))
           line_list[endofstartspan_pos+2] <- ">_["
           line <- paste(line_list,collapse = "")
+          line <- sub("vertical-align:sub", "vertical-align:baseline", line)
 
         }
         ##replace different html formating
@@ -2067,6 +2090,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   ## 3) Evaluate for filter words ---------------------------------------
   list_of_abbrevs <- NULL
   ## 3.1) Filter Search ---------------------------------------
+  if (output_error_tracker){
+    update_progress_info("Start: 3.1) Filter Search")
+  }
   if (integrity.indicator == TRUE && !filter.word.table[1, "words"] == "") {
     word.txtline.fw <- NULL
     for (i in 1:nrow(filter.word.table)) {
@@ -2078,6 +2104,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
                            detected_line)
 
       ## 3.2) Replace abbreviations -----------------------------------------------------
+      if (output_error_tracker){
+        update_progress_info("Start: 3.2) Replace abbreviations")
+      }
       if (eval.abbrevs == TRUE && length(word.txtline.fw) > 0){
         ## Check if any occurences (heading + text) of the
         ## filter word are defining and abbreviation
@@ -2152,6 +2181,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   } ## end replace abbreviations
 
   ## 3.3) Real filter Search ---------------------------------------
+  if (output_error_tracker){
+    update_progress_info("Start: 3.3) Real filter Search")
+  }
   if (integrity.indicator == TRUE) {
     word.txtline.fw <- NULL
     word.txtpos.fw <- NULL
@@ -2313,6 +2345,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   } ## end 3.3) Filter Search
 
   ## 4) Search of search words -----------------------------------------------
+  if (output_error_tracker){
+    update_progress_info("Start: 4) Search of search words")
+  }
   ## only if filter words were found or no filter was set continue and
   ## search words were set
   if (filterwords.go == TRUE && integrity.indicator == TRUE) {
@@ -2321,6 +2356,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
     word.txtline <- NULL
     for (i in 1:nrow(search.word.table)) {
       ## 4.1) Search for lines with search word -------------------------
+      if (output_error_tracker){
+        update_progress_info("Start: 4.1) Search for lines with search word")
+      }
       word <- search.word.table[i, "words"]
       ignore.case.sw <- search.word.table[i, "ignore.case.sw"]
       word.txtline <- NULL
@@ -2342,6 +2380,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
       ## 4.2) Continue analysis when search words were found ----------------------------
       if (length(word.txtline) > 0) searchwords.go <- TRUE
       ## 4.3) Replace abbreviations -----------------------------------------------------
+      if (output_error_tracker){
+        update_progress_info("Start: 4.3) Replace abbreviations")
+      }
       if (eval.abbrevs == TRUE && length(word.txtline) > 0 &&
           !search.word.table[i, "words"] == ""){
         ## Check if any occurences (heading + text) of the
@@ -2436,6 +2477,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }  ## end if search words were present
 
   ## 5) Sort the html content ---------------------------------------
+  if (output_error_tracker){
+    update_progress_info("Start: 5) Sort the html content")
+  }
   if (filterwords.go == TRUE && integrity.indicator == TRUE) {
     ## add the top and left ##
     for (p in 1:length(txthtmlcontent)) {
@@ -2453,7 +2497,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
     }
     for (p in 1:length(txthtmlcontent)){
       ## 5.1) Assign top and left values ------------------------------
-
+      if (output_error_tracker){
+        update_progress_info("Start: 5.1) Assign top and left values")
+      }
       start <- grep("^<body>",htmlcontent[[p]][,1])[1] + 1
       if (is.na(start)) start <- 1
       end <- grep("^</body>",htmlcontent[[p]][,1])[1] - 1
@@ -2537,6 +2583,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
 
 
       ## 5.2) Sort lines according to top -------------------
+      if (output_error_tracker){
+        update_progress_info("Start: 5.2) Sort lines according to top")
+      }
       ## only the lines with top value
       lines.with.top.value <- out.htmlcontent[!is.na(out.htmlcontent[, "top"]), ]
       txtlines.with.top.value <- out.txthtmlcontent[!is.na(out.htmlcontent[, "top"])]
@@ -2564,6 +2613,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }
 
   ## 6) Extract Tables --------------------------------------------
+  if (output_error_tracker){
+    update_progress_info("Start: 6) Extract Tables")
+  }
   ## Explanation: The table detection is important to distinguish tables from text
   ## even if tables will not be exported they will not be a part of the sentence
   ## detection if search words.
@@ -2572,6 +2624,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   ## test if file has tables --> only process tables when table is present
 
   ## 6.1) Test if document has tables -------
+  if (output_error_tracker){
+    update_progress_info("Start: 6.1) Test if document has tables")
+  }
   if (searchwords.go == TRUE && filterwords.go == TRUE &&
       integrity.indicator == TRUE) {
     ## if there is no additional heading
@@ -2616,6 +2671,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }
 
   ## 6.2) Detect the table start positions by detecting headings ----------------
+  if (output_error_tracker){
+    update_progress_info("Start: 6.2) Detect the table start positions by detecting headings")
+  }
   if (searchwords.go == TRUE && filterwords.go == TRUE &&
       integrity.indicator == TRUE && !length(tablestart.pos) == 0) {
 
@@ -2946,6 +3004,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }
 
   ## 6.3) Determine if tables were found in html, txt to both files ------------
+  if (output_error_tracker){
+    update_progress_info("Start: 6.3) Determine if tables were found in html, txt to both files")
+  }
   if (searchwords.go == TRUE && filterwords.go == TRUE &&
       integrity.indicator == TRUE && !length(tablestart.pos) == 0 &&
       nrow(as.data.frame((htmltablelines))) > 0 && ncol(as.data.frame((htmltablelines))) > 0) {
@@ -2992,6 +3053,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
 
 
   ## 6.4) Add positional value to tables -----
+  if (output_error_tracker){
+    update_progress_info("Start: 6.4) Add positional value to tables")
+  }
   if (searchwords.go == TRUE && filterwords.go == TRUE &&
       integrity.indicator == TRUE && !length(tablestart.pos) == 0 &&
       nrow(as.data.frame((htmltablelines))) > 0 && ncol(as.data.frame((htmltablelines))) > 0) {
@@ -3074,6 +3138,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
       }
 
       ## 6.5) Detect how many columns by evaluating how many different left values ---------------
+      if (output_error_tracker){
+        update_progress_info("Start: 6.5) Detect how many columns by evaluating how many different left values")
+      }
       ## set the current line pos and page for the while loop
       currentline.pos <- htmltablelines[i, "tableend.pos"]
       currentline.page <- htmltablelines[i, "page"]
@@ -3213,6 +3280,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
       }
 
       ## 6.6) Determine the end of the table through the highest top value ---------------
+      if (output_error_tracker){
+        update_progress_info("Start: 6.6) Determine the end of the table through the highest top value")
+      }
       ## search for the max with all the left values ##
 
       ## if two tables are on the same page restrict lines
@@ -3278,6 +3348,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
       ## add everything below the table ##
 
       ## 6.7) Detect the legend by extracting all lines with a lower font that than the table -----
+      if (output_error_tracker){
+        update_progress_info("Start: 6.7) Detect the legend by extracting all lines with a lower font that than the table")
+      }
       ## get the current font size information ##
       pos.fontsize.start <- regexpr("font-size:",
                                     currentline[1])[[1]] + 10
@@ -3331,6 +3404,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }
 
   ## 6.8) Transfer information gained from html file to txt and keeplayouttxt tables-----------
+  if (output_error_tracker){
+    update_progress_info("Start: 6.8) Transfer information gained from html file to txt and keeplayouttxt tables")
+  }
   if (searchwords.go == TRUE && filterwords.go == TRUE &&
       integrity.indicator == TRUE && !length(tablestart.pos) == 0 &&
       nrow(as.data.frame((htmltablelines))) > 0 && ncol(as.data.frame((htmltablelines))) > 0) {
@@ -3594,6 +3670,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }
 
   ## 6.9) Assign table, legend or txt to the each html and txtline ----------
+  if (output_error_tracker){
+    update_progress_info("Start: 6.9) Assign table, legend or txt to the each html and txtline")
+  }
 
   if (searchwords.go == TRUE && filterwords.go == TRUE &&
       integrity.indicator == TRUE && !length(tablestart.pos) == 0 &&
@@ -3779,7 +3858,10 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }
 
   ## 7.1) Second search of search words in htmllines -----------------------------------------------
-
+  if (output_error_tracker){
+    update_progress_info("Start: 7.1) Second search of search words in htmllines")
+  }
+  
   if (filterwords.go == TRUE &&
       integrity.indicator == TRUE &&
       nrow(as.data.frame((htmltablelines))) > 0 && ncol(as.data.frame((htmltablelines))) > 0 &&
@@ -3894,8 +3976,6 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
           }
           n <- n + 1
         }
-        ##TODEL
-        print(names(processed.tables))
       } else{
         processed.tables <- htmltables
         names(processed.tables) <- names(htmltables)
@@ -3927,6 +4007,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
 
 
   ## 7.2) Export TABLE only if tab function was called --------------
+  if (output_error_tracker){
+    update_progress_info("Start: 7.2) Export TABLE only if tab function was called")
+  }
 
   if (searchwords.go == TRUE && filterwords.go == TRUE &&
       integrity.indicator == TRUE && !length(tablestart.pos) == 0 &&
@@ -4188,6 +4271,10 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }  ## end if (whattoextr == 'tabandtxt' || whattoextr == 'tab' || whattoextr == 'table' || whattoextr == 'txtandtab')
 
   ## 7.3) Export TABLE INFO only if tab function was called --------------
+  if (output_error_tracker){
+    update_progress_info("Start: 7.3) Export TABLE INFO only if tab function was called")
+  }
+  
   if (searchwords.go == TRUE && filterwords.go == TRUE &&
       integrity.indicator == TRUE && !length(tablestart.pos) == 0 &&
       nrow(as.data.frame((htmltablelines))) > 0 && ncol(as.data.frame((htmltablelines))) > 0 &&
@@ -4253,6 +4340,10 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }  ## end if (whattoextr == 'tabandtxt' || whattoextr == 'tab' || whattoextr == 'table' || whattoextr == 'txtandtab')
 
   ## 8) Export of SENTENCES if txt function was called -----------------------------------------------
+  if (output_error_tracker){
+    update_progress_info("Start: 8) Export of SENTENCES if txt function was called")
+  }
+  
   if (filterwords.go == TRUE &&
       integrity.indicator == TRUE &&
       (whattoextr == "tabandtxt" || whattoextr == "txt" || whattoextr == "txtandtab")) {
@@ -4566,6 +4657,9 @@ PDE_install_Xpdftools4.02 <- function(sysname=NULL, bin=NULL, verbose=TRUE, perm
   }  ## end if (whattoextr == 'tabandtxt' || whattoextr == 'txt' || whattoextr == 'txtandtab')
 
   ## 9) if the algorithm was not run in table detection ---------------------
+  if (output_error_tracker){
+    update_progress_info("Start: 9) if the algorithm was not run in table detection")
+  }
   ## setting tablelines is NULL
   if (length(output_files) > 0) {
 
@@ -7475,7 +7569,7 @@ PDE_analyzer_i <- function(verbose=TRUE) {
         } else {
           native.encoding <- "UTF-8"
         }
-
+        silent = Sys.setlocale("LC_ALL", "C")
         all_content <- readLines(loadfile,
                                  encoding = native.encoding)
         if (grepl("The following table was detected but not processable",all_content[1])){
